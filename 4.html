@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Smart — Saponin Glycosides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1ECDA;
+    --paper-dark:#E7DFC4;
+    --card:#FBF8EE;
+    --ink:#23241D;
+    --ink-soft:#4A4B3F;
+    --forest:#21402F;
+    --forest-deep:#152B1F;
+    --sage:#7C9473;
+    --moss:#4C6B4F;
+    --gold:#B8922E;
+    --gold-light:#E4C876;
+    --brick:#8B4B33;
+    --brick-light:#C97A5C;
+    --line: rgba(35,36,29,0.18);
+    --line-strong: rgba(35,36,29,0.32);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 10% 8%, rgba(76,107,79,0.07), transparent 40%),
+      radial-gradient(circle at 90% 92%, rgba(139,75,51,0.06), transparent 40%);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Fraunces',serif;color:var(--forest-deep);margin:0;}
+  p{margin:0 0 .7em 0;}
+  ::selection{background:var(--gold-light);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:3.4rem 6vw 2.2rem;
+    border-bottom:1px solid var(--line-strong);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-leaf{
+    position:absolute; right:-40px; top:-30px; width:260px; opacity:.16;
+    stroke:var(--forest); fill:none; stroke-width:1.2;
+  }
+  .kicker{
+    font-size:.78rem; letter-spacing:.03em; color:var(--brick);
+    font-weight:600; margin-bottom:.5rem;
+  }
+  .hero h1{font-size:clamp(2.3rem,5vw,3.6rem); font-weight:600; letter-spacing:-.01em;}
+  .hero h1 em{font-style:italic; color:var(--moss); font-weight:500;}
+  .hero-sub{
+    max-width:640px; margin-top:.9rem; color:var(--ink-soft);
+    font-size:1.02rem;
+  }
+  .hero-meta{
+    margin-top:1.4rem; display:flex; gap:1.4rem; flex-wrap:wrap;
+    font-size:.85rem; color:var(--moss); font-weight:600;
+  }
+  .hero-meta span{display:flex;align-items:center;gap:.4rem;}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);display:inline-block;}
+
+  /* ---------- TABS ---------- */
+  .tabbar{
+    position:sticky; top:0; z-index:50;
+    display:flex; gap:.5rem; padding:.9rem 6vw;
+    background:var(--paper); border-bottom:1px solid var(--line-strong);
+    overflow-x:auto;
+  }
+  .tab-btn{
+    font-family:'Fraunces',serif; font-size:.98rem; font-weight:500;
+    background:var(--card); border:1px solid var(--line-strong);
+    border-bottom-width:3px; border-bottom-color:transparent;
+    padding:.6rem 1.1rem .5rem; border-radius:3px 3px 0 0;
+    cursor:pointer; color:var(--ink-soft); white-space:nowrap;
+    transition:border-color .15s ease, color .15s ease, transform .15s ease;
+  }
+  .tab-btn:hover{transform:translateY(-1px); color:var(--forest);}
+  .tab-btn.active{
+    color:var(--forest-deep); border-bottom-color:var(--gold);
+    background:var(--paper-dark);
+  }
+
+  main{padding:2.4rem 6vw 5rem; max-width:1180px; margin:0 auto;}
+  section.panel{display:none; animation:fade .35s ease;}
+  section.panel.active{display:block;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  .section-head{margin-bottom:1.8rem;}
+  .section-head h2{font-size:1.9rem; font-weight:600;}
+  .section-head .tag{
+    display:inline-block; font-size:.72rem; font-weight:700; letter-spacing:.04em;
+    color:var(--forest); background:rgba(124,148,115,0.18);
+    padding:.2rem .55rem; border-radius:2px; margin-bottom:.6rem;
+  }
+  .section-head p{color:var(--ink-soft); max-width:640px;}
+
+  /* ---------- OVERVIEW ---------- */
+  .law-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem;}
+  .law-card{
+    background:var(--card); border:1px solid var(--line); border-left:4px solid var(--moss);
+    padding:1.1rem 1.2rem; border-radius:2px;
+  }
+  .law-card.gold{border-left-color:var(--gold);}
+  .law-card.brick{border-left-color:var(--brick);}
+  .law-card h3{font-size:1.02rem; margin-bottom:.45rem; font-weight:600;}
+  .law-card p{font-size:.9rem; color:var(--ink-soft); margin:0;}
+  .law-card ul{margin:.3rem 0 0; padding-left:1.1rem; font-size:.88rem; color:var(--ink-soft);}
+  .law-card li{margin-bottom:.15rem;}
+  .rule-strip{
+    margin-top:1.8rem; background:var(--forest-deep); color:var(--paper);
+    border-radius:3px; padding:1.1rem 1.4rem; display:flex; gap:1.2rem; align-items:center;
+    flex-wrap:wrap;
+  }
+  .rule-strip .big{font-family:'Fraunces',serif; font-size:1.15rem; font-weight:600; color:var(--gold-light);}
+  .rule-strip p{margin:0; font-size:.88rem; color:#E4E0CE;}
+
+  /* ---------- DIAGRAMS ---------- */
+  .diagram-block{
+    background:var(--card); border:1px solid var(--line); border-radius:3px;
+    padding:1.5rem; margin-bottom:1.6rem;
+  }
+  .diagram-block h3{font-size:1.12rem; margin-bottom:.2rem;}
+  .diagram-block .hint{font-size:.8rem; color:var(--moss); font-weight:600; margin-bottom:1rem;}
+  .tree{display:flex; flex-direction:column; align-items:center; gap:.7rem;}
+  .node{
+    font-size:.86rem; font-weight:600; padding:.5rem .9rem; border-radius:3px;
+    border:1.5px solid var(--forest); color:var(--forest-deep); background:var(--paper);
+    cursor:pointer; transition:all .15s ease; text-align:center;
+  }
+  .node:hover{background:var(--gold-light); border-color:var(--gold);}
+  .node.selected{background:var(--forest); color:var(--paper); border-color:var(--forest-deep);}
+  .row{display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;}
+  .connector{width:1.5px; height:16px; background:var(--line-strong);}
+  .detail-box{
+    margin-top:1rem; background:var(--paper-dark); border:1px dashed var(--line-strong);
+    border-radius:3px; padding:.9rem 1.1rem; font-size:.88rem; color:var(--ink-soft); min-height:44px;
+  }
+  .detail-box b{color:var(--forest-deep);}
+
+  .toggle-row{display:flex; gap:.6rem; margin-bottom:1rem;}
+  .toggle-btn{
+    flex:1; padding:.6rem .8rem; border:1.5px solid var(--line-strong); background:var(--paper);
+    border-radius:3px; cursor:pointer; font-weight:600; font-size:.85rem; color:var(--ink-soft);
+  }
+  .toggle-btn.active{background:var(--moss); color:#fff; border-color:var(--moss);}
+  .compare-panel{display:none; font-size:.88rem; color:var(--ink-soft);}
+  .compare-panel.active{display:block;}
+  .compare-panel table{width:100%; border-collapse:collapse; margin-top:.4rem;}
+  .compare-panel td{padding:.35rem 0; border-bottom:1px solid var(--line); vertical-align:top;}
+  .compare-panel td:first-child{font-weight:600; color:var(--forest); width:38%;}
+
+  .steps-row{display:flex; gap:.5rem; margin-bottom:1rem; flex-wrap:wrap;}
+  .step-chip{
+    width:34px;height:34px;border-radius:50%; display:flex; align-items:center; justify-content:center;
+    border:2px solid var(--brick); color:var(--brick); font-weight:700; cursor:pointer; font-size:.85rem;
+    background:var(--paper);
+  }
+  .step-chip.active{background:var(--brick); color:#fff;}
+  .rbc-visual{display:flex; align-items:center; gap:1.4rem; justify-content:center; margin:1rem 0;}
+  .rbc{width:70px;height:70px;border-radius:50%; background:var(--brick-light); transition:all .3s ease; border:2px solid var(--brick);}
+  .rbc.state1{background:var(--brick-light); transform:scale(1);}
+  .rbc.state2{background:#D9A98A; transform:scale(0.9); box-shadow:inset 0 0 0 4px rgba(255,255,255,.5);}
+  .rbc.state3{background:transparent; border-style:dashed; transform:scale(1.2); opacity:.5;}
+  .arrow-flow{font-size:1.4rem; color:var(--line-strong);}
+
+  .reaction-row{display:flex; align-items:center; gap:.8rem; flex-wrap:wrap; justify-content:center;}
+  .reaction-box{
+    padding:.7rem 1rem; background:var(--paper); border:1.5px solid var(--forest); border-radius:3px;
+    font-size:.85rem; font-weight:600; cursor:pointer; text-align:center; color:var(--forest-deep);
+  }
+  .reaction-box:hover{background:var(--gold-light);}
+  .reaction-arrow{display:flex; flex-direction:column; align-items:center; font-size:.72rem; color:var(--moss); font-weight:600;}
+
+  .spoke-wrap{display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center;}
+  .spoke{
+    padding:.55rem 1rem; border-radius:20px; border:1.5px solid var(--sage); background:var(--paper);
+    font-size:.83rem; font-weight:600; cursor:pointer; color:var(--forest-deep);
+  }
+  .spoke.active{background:var(--sage); color:#fff;}
+
+  /* ---------- MINI MAP ---------- */
+  .mm-wrap{display:grid; grid-template-columns:280px 1fr; gap:1.4rem;}
+  @media(max-width:760px){.mm-wrap{grid-template-columns:1fr;}}
+  .mm-list{display:flex; flex-direction:column; gap:.4rem; max-height:640px; overflow-y:auto; padding-right:.3rem;}
+  .mm-title{
+    text-align:left; padding:.65rem .85rem; border:1px solid var(--line); background:var(--card);
+    border-radius:2px; cursor:pointer; font-size:.87rem; font-weight:600; color:var(--ink-soft);
+    border-left:3px solid transparent;
+  }
+  .mm-title:hover{border-left-color:var(--sage);}
+  .mm-title.active{border-left-color:var(--gold); background:var(--paper-dark); color:var(--forest-deep);}
+  .mm-display{
+    background:var(--card); border:1px solid var(--line); border-radius:3px; padding:1.6rem;
+    min-height:400px; position:sticky; top:78px;
+  }
+  .mm-display h3{font-size:1.25rem; margin-bottom:.7rem;}
+  .mm-display .body{font-size:.92rem; color:var(--ink-soft);}
+  .mm-display .body ul{padding-left:1.2rem;}
+  .mm-placeholder{color:var(--line-strong); font-style:italic; font-size:.9rem;}
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-controls{display:flex; gap:.7rem; align-items:center; margin-bottom:1.2rem; flex-wrap:wrap;}
+  .fc-btn{
+    padding:.5rem 1rem; border-radius:3px; border:1.5px solid var(--forest); background:var(--forest);
+    color:#fff; font-weight:600; font-size:.83rem; cursor:pointer;
+  }
+  .fc-btn.ghost{background:transparent; color:var(--forest); }
+  .fc-count{font-size:.8rem; color:var(--moss); font-weight:600;}
+  .fc-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:.9rem; align-items:start;}
+  .fc-card{
+    perspective:1000px; height:220px; cursor:pointer;
+  }
+  .fc-inner{
+    position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;
+  }
+  .fc-card.flipped .fc-inner{transform:rotateY(180deg);}
+  .fc-face{
+    position:absolute; inset:0; backface-visibility:hidden; border-radius:4px;
+    padding:1.7rem .9rem .9rem; display:flex; align-items:center; justify-content:center; text-align:center;
+    font-size:.85rem; border:1px solid var(--line-strong);
+    overflow-y:auto; overflow-wrap:break-word; word-break:break-word; line-height:1.38;
+  }
+  .fc-face::-webkit-scrollbar{width:5px;}
+  .fc-face::-webkit-scrollbar-thumb{background:var(--line-strong); border-radius:3px;}
+  .fc-front{background:var(--card); color:var(--ink); font-weight:600;}
+  .fc-back{background:var(--forest); color:var(--paper); transform:rotateY(180deg); font-weight:500; font-size:.82rem;}
+  .fc-face.fc-dense{font-size:.74rem; line-height:1.32;}
+  .fc-idx{position:absolute; top:6px; left:9px; font-size:.68rem; color:var(--moss); font-weight:700; z-index:2;}
+  .fc-back .fc-idx{color:var(--gold-light);}
+
+  /* ---------- QUIZ ---------- */
+  .quiz-top{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.7rem; margin-bottom:1rem;}
+  .score-pill{
+    background:var(--forest); color:#fff; padding:.4rem .9rem; border-radius:20px; font-size:.82rem; font-weight:700;
+  }
+  .quiz-reset{
+    background:transparent; border:1.5px solid var(--brick); color:var(--brick); padding:.4rem .9rem;
+    border-radius:20px; font-size:.8rem; font-weight:700; cursor:pointer;
+  }
+  .q-card{
+    background:var(--card); border:1px solid var(--line); border-radius:3px; padding:1.1rem 1.3rem; margin-bottom:.9rem;
+  }
+  .q-num{font-size:.72rem; color:var(--moss); font-weight:700; letter-spacing:.03em; margin-bottom:.3rem;}
+  .q-text{font-size:.98rem; font-weight:600; margin-bottom:.7rem; color:var(--ink);}
+  .opt{
+    display:block; width:100%; text-align:left; padding:.55rem .8rem; margin-bottom:.4rem;
+    border:1.3px solid var(--line-strong); background:var(--paper); border-radius:3px; cursor:pointer;
+    font-size:.86rem; color:var(--ink-soft); transition:all .12s ease;
+  }
+  .opt:hover{border-color:var(--sage);}
+  .opt.correct{background:rgba(76,107,79,0.18); border-color:var(--moss); color:var(--forest-deep); font-weight:600;}
+  .opt.wrong{background:rgba(139,75,51,0.16); border-color:var(--brick); color:var(--brick); font-weight:600;}
+  .opt[disabled]{cursor:default;}
+
+  /* ---------- LEVEL SWITCH ---------- */
+  .level-row{display:flex; gap:.6rem; margin-bottom:1rem; flex-wrap:wrap;}
+  .level-btn{
+    padding:.55rem 1.05rem; border-radius:20px; border:1.5px solid var(--line-strong); background:var(--paper);
+    cursor:pointer; font-weight:700; font-size:.82rem; color:var(--ink-soft); display:flex; align-items:center; gap:.4rem;
+  }
+  .level-btn .lvl-n{font-size:.74rem; opacity:.75; font-weight:600;}
+  .level-btn[data-level="1"].active{background:var(--moss); border-color:var(--moss); color:#fff;}
+  .level-btn[data-level="2"].active{background:var(--gold); border-color:var(--gold); color:#fff;}
+  .level-btn[data-level="3"].active{background:var(--brick); border-color:var(--brick); color:#fff;}
+
+  footer{
+    text-align:center; padding:2rem 1rem 2.4rem; font-size:.8rem; color:var(--moss);
+    border-top:1px solid var(--line); margin-top:1rem;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="hero-leaf" viewBox="0 0 200 200"><path d="M100 10 C40 40 20 100 60 180 C80 130 90 90 100 10 Z"/><path d="M100 10 C60 40 55 90 60 150"/><path d="M100 10 C140 40 160 100 120 180 C100 130 95 90 100 10 Z"/></svg>
+  <div class="kicker">Pharmacognosy II — Plant Glycosides</div>
+  <h1>Study <em>Smart</em></h1>
+  <p class="hero-sub">A compact study companion for saponin glycosides — steroidal and triterpenoid types, their hemolytic behaviour, and the three classic drugs built from them: licorice, fenugreek and ginseng.</p>
+  <div class="hero-meta">
+    <span><i class="dot"></i>5 sections</span>
+    <span><i class="dot"></i>150 flash cards · 3 levels</span>
+    <span><i class="dot"></i>150 quiz questions · 3 levels</span>
+  </div>
+</header>
+
+<nav class="tabbar" id="tabbar">
+  <button class="tab-btn active" data-tab="overview">Overview</button>
+  <button class="tab-btn" data-tab="diagrams">Diagrams</button>
+  <button class="tab-btn" data-tab="minimap">Mini Map</button>
+  <button class="tab-btn" data-tab="flashcards">Flash Cards</button>
+  <button class="tab-btn" data-tab="quiz">Quiz Bank</button>
+</nav>
+
+<main>
+
+  <!-- ================= OVERVIEW ================= -->
+  <section class="panel active" id="overview">
+    <div class="section-head">
+      <span class="tag">QUICK REFERENCE</span>
+      <h2>The essentials, at a glance</h2>
+      <p>No long lecture here — just the rules and facts worth memorizing before an exam.</p>
+    </div>
+    <div class="law-grid">
+      <div class="law-card">
+        <h3>What is a saponin?</h3>
+        <p>A glycoside from higher plants. Hydrolysis splits it into a sugar (glycon) and a nonpolar aglycon called a <b>sapogenin</b>.</p>
+      </div>
+      <div class="law-card gold">
+        <h3>Two defining properties</h3>
+        <ul><li>Persistent foaming in water (emulsifier)</li><li>Hemolysis of red blood cells</li></ul>
+      </div>
+      <div class="law-card brick">
+        <h3>The golden safety rule</h3>
+        <p>Extremely toxic <b>IV</b> (destroys RBC membranes) but harmless <b>orally</b> — high molecular weight & polarity block GIT absorption.</p>
+      </div>
+      <div class="law-card">
+        <h3>Chemical split</h3>
+        <ul>
+          <li><b>Steroidal (C25)</b> — neutral, spiroketal side chain</li>
+          <li><b>Triterpenoid (C30)</b> — acidic, more common in nature</li>
+        </ul>
+      </div>
+      <div class="law-card">
+        <h3>Shared architecture</h3>
+        <p>Both types link sugar at <b>position 3</b> and both arise biosynthetically from <b>mevalonic acid / isoprenoid units</b>.</p>
+      </div>
+      <div class="law-card">
+        <h3>Sapogenins ≠ drugs</h3>
+        <p>Not therapeutic themselves — but key starting material for steroidal hormones (cortisone, oral contraceptives).</p>
+      </div>
+      <div class="law-card gold">
+        <h3>Applications</h3>
+        <ul><li>Detergents & emulsifiers</li><li>Beverage foaming agents</li><li>Fish poisons (cold-blooded toxicity)</li><li>Expectorants (Ipecac, liquorice)</li></ul>
+      </div>
+      <div class="law-card">
+        <h3>Three signature drugs</h3>
+        <ul>
+          <li><b>Glycyrrhiza</b> — glycyrrhizin, 50× sweeter than sugar</li>
+          <li><b>Fenugreek</b> — diosgenin source, antidiabetic</li>
+          <li><b>Ginseng</b> — ginsenoside, sexual stimulant/adaptogen</li>
+        </ul>
+      </div>
+    </div>
+    <div class="rule-strip">
+      <div class="big">C25 vs C30</div>
+      <p>Steroidal = neutral, spirostan skeleton, Diosgenin is the industrial leader. Triterpenoid = acidic, Dammarane (ginsenoside) or Oleanane (amyrins) family.</p>
+    </div>
+  </section>
+
+  <!-- ================= DIAGRAMS ================= -->
+  <section class="panel" id="diagrams">
+    <div class="section-head">
+      <span class="tag">CLICK TO EXPLORE</span>
+      <h2>Diagrams</h2>
+      <p>Every diagram below responds to clicks — tap a node, step or box to reveal its detail.</p>
+    </div>
+
+    <div class="diagram-block">
+      <h3>1 · Hydrolysis tree</h3>
+      <div class="hint">Click any box</div>
+      <div class="tree">
+        <div class="node" data-info="saponins">Saponins</div>
+        <div class="connector"></div>
+        <div class="row">
+          <div class="node" data-info="sugar">Sugar (glycon)</div>
+          <div class="node" data-info="sapogenins">Sapogenins (aglycon)</div>
+        </div>
+        <div class="row">
+          <div class="node" data-info="steroidal">Steroidal — neutral</div>
+          <div class="node" data-info="triterpenoid">Triterpenoid — acidic</div>
+        </div>
+      </div>
+      <div class="detail-box" id="tree-detail">Click a box above to read its definition.</div>
+    </div>
+
+    <div class="diagram-block">
+      <h3>2 · Steroidal vs Triterpenoid</h3>
+      <div class="hint">Toggle to compare</div>
+      <div class="toggle-row">
+        <button class="toggle-btn active" data-cmp="steroidal">Steroidal (C25)</button>
+        <button class="toggle-btn" data-cmp="triterpenoid">Triterpenoid (C30)</button>
+      </div>
+      <div class="compare-panel active" id="cmp-steroidal">
+        <table>
+          <tr><td>Carbon count</td><td>C25</td></tr>
+          <tr><td>Charge type</td><td>Neutral</td></tr>
+          <tr><td>Key feature</td><td>Spiroketal side chain (rings E & F)</td></tr>
+          <tr><td>Implied name</td><td>Spirostan</td></tr>
+          <tr><td>Lead compound</td><td>Diosgenin — principal industrial sapogenin</td></tr>
+          <tr><td>Drugs</td><td>Diosgenin, Sarsapogenin</td></tr>
+        </table>
+      </div>
+      <div class="compare-panel" id="cmp-triterpenoid">
+        <table>
+          <tr><td>Carbon count</td><td>C30</td></tr>
+          <tr><td>Charge type</td><td>Acidic</td></tr>
+          <tr><td>Key feature</td><td>Several oxygen atoms on a triterpene core</td></tr>
+          <tr><td>Sub-families</td><td>Tetracyclic (Dammarane) / Pentacyclic (Oleanane)</td></tr>
+          <tr><td>Examples</td><td>Ginsenoside (Dammarane); α &amp; β-amyrin (Oleanane)</td></tr>
+          <tr><td>Distribution</td><td>More widespread in nature than steroidal type</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="diagram-block">
+      <h3>3 · How hemolysis happens</h3>
+      <div class="hint">Step through 1 → 3</div>
+      <div class="steps-row">
+        <div class="step-chip active" data-step="1">1</div>
+        <div class="step-chip" data-step="2">2</div>
+        <div class="step-chip" data-step="3">3</div>
+      </div>
+      <div class="rbc-visual">
+        <div class="rbc state1" id="rbc-visual"></div>
+      </div>
+      <div class="detail-box" id="hemo-detail">Step 1: A healthy red blood cell membrane holds cholesterol in place.</div>
+    </div>
+
+    <div class="diagram-block">
+      <h3>4 · Glycyrrhizin hydrolysis</h3>
+      <div class="hint">Click a box</div>
+      <div class="reaction-row">
+        <div class="reaction-box" data-rx="glycyrrhizin">Glycyrrhizin<br><small>(50× sweeter than sugar)</small></div>
+        <div class="reaction-arrow">glucuronidase<br>→</div>
+        <div class="reaction-box" data-rx="glycyrrhetinic">Glycyrrhetinic acid<br><small>(aglycon)</small></div>
+        <div class="reaction-arrow">+</div>
+        <div class="reaction-box" data-rx="glucuronic">2 × Glucuronic acid<br><small>(sugar acid)</small></div>
+      </div>
+      <div class="detail-box" id="rx-detail">Click any box in the reaction to see its role.</div>
+    </div>
+
+    <div class="diagram-block">
+      <h3>5 · Applications map</h3>
+      <div class="hint">Click a category</div>
+      <div class="spoke-wrap" id="spoke-wrap">
+        <div class="spoke active" data-spoke="industrial">Industrial</div>
+        <div class="spoke" data-spoke="pharma">Pharmacological</div>
+        <div class="spoke" data-spoke="food">Food sources</div>
+        <div class="spoke" data-spoke="hormone">Hormone precursor</div>
+      </div>
+      <div class="detail-box" id="spoke-detail"></div>
+    </div>
+  </section>
+
+  <!-- ================= MINI MAP ================= -->
+  <section class="panel" id="minimap">
+    <div class="section-head">
+      <span class="tag">TOPIC LOOKUP</span>
+      <h2>Mini Map</h2>
+      <p>Click any title on the left — its full note appears in the panel on the right.</p>
+    </div>
+    <div class="mm-wrap">
+      <div class="mm-list" id="mm-list"></div>
+      <div class="mm-display" id="mm-display">
+        <p class="mm-placeholder">Select a topic to read its note here.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FLASHCARDS ================= -->
+  <section class="panel" id="flashcards">
+    <div class="section-head">
+      <span class="tag">ACTIVE RECALL</span>
+      <h2>Flash Cards</h2>
+      <p>Tap a card to flip it. Covers every fact from the lecture, across three difficulty levels.</p>
+    </div>
+    <div class="level-row" id="fc-level-row">
+      <button class="level-btn active" data-level="1">Level 1 — Easy <span class="lvl-n">(60)</span></button>
+      <button class="level-btn" data-level="2">Level 2 — Medium <span class="lvl-n">(50)</span></button>
+      <button class="level-btn" data-level="3">Level 3 — Hard <span class="lvl-n">(40)</span></button>
+    </div>
+    <div class="fc-controls">
+      <button class="fc-btn" id="fc-shuffle">Shuffle</button>
+      <button class="fc-btn ghost" id="fc-flipall">Flip all back</button>
+      <span class="fc-count" id="fc-count"></span>
+    </div>
+    <div class="fc-grid" id="fc-grid"></div>
+  </section>
+
+  <!-- ================= QUIZ ================= -->
+  <section class="panel" id="quiz">
+    <div class="section-head">
+      <span class="tag">TEST YOURSELF</span>
+      <h2>Quiz Bank</h2>
+      <p>Answer choices are shuffled — the correct one moves every time you reload. Three difficulty levels are available.</p>
+    </div>
+    <div class="level-row" id="quiz-level-row">
+      <button class="level-btn active" data-level="1">Level 1 — Easy <span class="lvl-n">(60)</span></button>
+      <button class="level-btn" data-level="2">Level 2 — Medium <span class="lvl-n">(50)</span></button>
+      <button class="level-btn" data-level="3">Level 3 — Hard <span class="lvl-n">(40)</span></button>
+    </div>
+    <div class="quiz-top">
+      <div class="score-pill" id="quiz-score">Score: 0 / 0</div>
+      <button class="quiz-reset" id="quiz-reset">Reset quiz</button>
+    </div>
+    <div id="quiz-list"></div>
+  </section>
+
+</main>
+
+<footer>© <span id="yr"></span> Anmar Taha. All rights reserved.</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* ---------------- TAB SWITCHING ---------------- */
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+
+/* ---------------- DIAGRAM 1: hydrolysis tree ---------------- */
+const treeInfo = {
+  saponins:"<b>Saponins</b> — glycosides widely distributed in higher plants; the parent molecule that hydrolyzes into sugar + sapogenin.",
+  sugar:"<b>Sugar (glycon)</b> — commonly arabinose, xylose or glucose, attached at position 3 of the aglycon.",
+  sapogenins:"<b>Sapogenins</b> — the nonpolar aglycon released on hydrolysis; not used therapeutically but valuable as a hormone-synthesis starting material.",
+  steroidal:"<b>Steroidal (neutral)</b> — C25 skeleton with a spiroketal side chain; implied name 'spirostan'.",
+  triterpenoid:"<b>Triterpenoid (acidic)</b> — C30 skeleton with several oxygens; tetracyclic (Dammarane) or pentacyclic (Oleanane)."
+};
+document.querySelectorAll('#diagrams .tree .node').forEach(n=>{
+  n.addEventListener('click', ()=>{
+    document.querySelectorAll('#diagrams .tree .node').forEach(x=>x.classList.remove('selected'));
+    n.classList.add('selected');
+    document.getElementById('tree-detail').innerHTML = treeInfo[n.dataset.info];
+  });
+});
+
+/* ---------------- DIAGRAM 2: compare toggle ---------------- */
+document.querySelectorAll('.toggle-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.compare-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('cmp-'+btn.dataset.cmp).classList.add('active');
+  });
+});
+
+/* ---------------- DIAGRAM 3: hemolysis steps ---------------- */
+const hemoSteps = {
+  1:{text:"Step 1: A healthy red blood cell membrane holds cholesterol in place — the cell is intact.", cls:"state1"},
+  2:{text:"Step 2: Saponins precipitate the membrane cholesterol, weakening the RBC wall.", cls:"state2"},
+  3:{text:"Step 3: The wall ruptures and hemoglobin is released — hemolysis. This is why saponins are extremely toxic if injected, yet harmless orally since they are never absorbed from the GIT.", cls:"state3"}
+};
+document.querySelectorAll('.step-chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    document.querySelectorAll('.step-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    const s = hemoSteps[chip.dataset.step];
+    document.getElementById('hemo-detail').textContent = s.text;
+    const rbc = document.getElementById('rbc-visual');
+    rbc.className = 'rbc ' + s.cls;
+  });
+});
+
+/* ---------------- DIAGRAM 4: reaction boxes ---------------- */
+const rxInfo = {
+  glycyrrhizin:"<b>Glycyrrhizin</b> is the triterpenoid saponin glycoside in licorice root, about 50× sweeter than sugar.",
+  glycyrrhetinic:"<b>Glycyrrhetinic acid</b> is the aglycon left after hydrolysis — it loses the sweet taste of the parent glycoside.",
+  glucuronic:"<b>Glucuronic acid</b> is a sugar acid derived from glucose; two molecules are released alongside the aglycon."
+};
+document.querySelectorAll('.reaction-box').forEach(b=>{
+  b.addEventListener('click', ()=> document.getElementById('rx-detail').innerHTML = rxInfo[b.dataset.rx]);
+});
+
+/* ---------------- DIAGRAM 5: applications spokes ---------------- */
+const spokeInfo = {
+  industrial:"<b>Industrial:</b> cleaning-industry detergents (foaming), emulsifiers for resins/fats/fixed oils, foam boosters in beverages.",
+  pharma:"<b>Pharmacological:</b> improve absorption of active substances as emulsifiers; expectorants (Ipecac, liquorice) that stimulate bronchial secretion and ciliary activity.",
+  food:"<b>Food sources:</b> beans, lentils, soybeans, spinach and oats naturally contain notable saponin levels.",
+  hormone:"<b>Hormone precursor:</b> sapogenins (especially diosgenin) are starting materials for cortisone and combined oral contraceptives — also used as fish-poisons due to hemolytic toxicity in cold-blooded animals."
+};
+function setSpoke(key){
+  document.querySelectorAll('.spoke').forEach(s=>s.classList.toggle('active', s.dataset.spoke===key));
+  document.getElementById('spoke-detail').innerHTML = spokeInfo[key];
+}
+document.querySelectorAll('.spoke').forEach(s=> s.addEventListener('click', ()=>setSpoke(s.dataset.spoke)));
+setSpoke('industrial');
+
+/* ================= MINI MAP DATA ================= */
+const mmTopics = [
+  {t:"Definition & hydrolysis", b:"Saponins are glycosides widely distributed in higher plants. Hydrolysis releases a sugar (glycon — arabinose, xylose, glucose) and a nonpolar aglycon called a sapogenin."},
+  {t:"Two main properties", b:"<ul><li><b>Foaming:</b> forms lasting, persistent foam in water; acts as an excellent emulsifying and foaming agent, lowering surface tension.</li><li><b>Hemolysis:</b> destroys red blood cells by precipitating membrane cholesterol.</li></ul>"},
+  {t:"Hemolytic properties & safety", b:"Cholesterol precipitation destroys the RBC wall, liberating hemoglobin. This makes saponins extremely toxic if injected — but harmless if taken orally, because their high molecular weight and high polarity prevent GIT absorption. Sarsaparilla, for example, is saponin-rich yet used safely in non-alcoholic beverages to boost froth."},
+  {t:"Sapogenins & the cortisone story", b:"Sapogenins are not therapeutic agents themselves, but serve as starting material for synthesizing steroidal hormones. Much saponin-plant research aimed to find a cortisone precursor: cortisone was originally isolated from the adrenal cortex, then synthesized from cattle bile acids — a source that caused allergic reactions and limited supply. The outstanding plant steroids for cortisone production are Diosgenin, Sarsapogenin, Hecogenin, Getogenin and Smilagenin."},
+  {t:"Natural sources", b:"Valuable food materials containing significant saponins include beans, lentils, soybeans, spinach and oats."},
+  {t:"Industrial applications", b:"Saponins are used in the cleaning industry as detergents (foaming property), as powerful emulsifiers of resins, fats and fixed oils, and to increase foam in beverages. Because they are hemolytic and toxic to cold-blooded animals, they are also used as fish-poisons."},
+  {t:"Pharmacological applications", b:"They serve as starting material for steroidal hormone synthesis, increase the absorption rate of active substances by acting as emulsifiers, and appear in expectorant drugs such as Ipecac and liquorice — stimulating bronchial secretion and activating the ciliary epithelium of the bronchi."},
+  {t:"Chemical classification", b:"By genin part: <b>Neutral-Steroidal (C25)</b> — a cyclopentanophenanthrene steroidal nucleus with a spiroketal side chain; and <b>Acid-Triterpenoid (C30)</b> — a triterpene structure with several oxygens, either tetracyclic (Dammarane family) or pentacyclic (Oleanane family). Both types carry the glycosidic linkage at position 3 and share a common biosynthetic origin via mevalonic acid and isoprenoid units."},
+  {t:"Steroidal saponins", b:"Contain a spiroketal side chain — rings E and F are called a ketal because a carbon atom connects to two oxygen atoms not on the same plane (spiral). Neutral saponins imply the name spirostan. Diosgenin is the principal sapogenin used by industry; drugs containing steroidal sapogenins include Diosgenin and Sarsapogenin. They are precursors for sex hormones and corticosteroids (cortisone, diuretic steroids, vitamin D, combined oral contraceptives)."},
+  {t:"Triterpenoid acidic saponins", b:"A triterpene structure with 30 carbon atoms and several oxygens, more widely distributed in nature than steroidal glycosides. Classified as tetracyclic triterpenoid (Dammarane family, e.g. ginsenoside) or pentacyclic triterpenoid (Oleanane family, e.g. α-amyrin and β-amyrin)."},
+  {t:"Glycyrrhiza (licorice root)", b:"The dried rhizomes and roots of Glycyrrhiza glabra (Fam. Leguminosae). 'Glycyrrhiza' is Greek for sweet root; 'glabra' means smooth. Until 1870 Spain supplied nearly the whole world; today Turkey, Greece and Asia Minor supply most licorice. It contains the triterpenoid saponin glycoside Glycyrrhizin (50× sweeter than sugar), which hydrolyzes to Glycyrrhetinic acid plus two molecules of glucuronic acid, plus flavonoid glycosides."},
+  {t:"Glycyrrhizin — activities", b:"A flavoring/sweetening agent used in cough syrups to mask bitter drugs; has expectorant action; added to chewing gum, chocolate, candy, cigarettes, smoking mixtures and beverages to boost foaming and improve taste."},
+  {t:"Glycyrrhizin — GIT & topical uses", b:"Used in digestive disorders as a good antispasmodic; effective as an antibacterial against H. pylori, helping prevent gastric ulcers; as syrup it treats gastroesophageal reflux (GERD) and heartburn. Topically it appears in eczema preparations and mouth gargles for mouth ulcers; licorice tea and lozenges relieve sore throat."},
+  {t:"Licorice — side effects", b:"Excessive use may cause high blood pressure, low potassium levels, weakness and irregular heart rhythms. People with high salt intake, hypertension, heart disease or kidney disease should consume it with caution."},
+  {t:"Fenugreek", b:"The dried seeds of Trigonella foenum-graecum (Fam. Leguminosae) — a potential source of Diosgenin. India, Morocco and Egypt are important producers. Beyond its use as a spice, it shows antidiabetic, cholesterol-lowering, anti-inflammatory, antipyretic, anti-ulcer and anticancer properties."},
+  {t:"Fenugreek — medicinal uses", b:"Diosgenin is a starting material for combined oral contraceptives and cortisone. Fenugreek helps manage diabetes (reduces sugar absorption, stimulates insulin), increases breast milk production in lactating women, improves sex drive and fertility (positive effect on testosterone and estrogen), aids digestion (indigestion, flatulence), relieves dysmenorrhea, can help with hair loss, and increases appetite."},
+  {t:"Ginseng", b:"The dried root of Panax ginseng. Folk medicine attributes benefits such as aphrodisiac, stimulant, type II diabetes treatment, or a cure for male sexual dysfunction. It appears in energy drinks, herbal teas (ginseng coffee) and some cosmetics, though cosmetic use is not clinically proven."},
+  {t:"Ginseng — constituents & uses", b:"Contains the saponin glycoside ginsenoside (panaxoside), built on a triterpenoid nucleus. Uses include: sexual stimulant in erectile dysfunction, antidiabetic (enhances insulin production), anti-stress, antioxidant, and immunity booster (helps prevent flu and colds)."},
+  {t:"Ginseng — cautions", b:"Should be taken for up to 6 months. May interact with diabetes, blood and depression medications. The most common side effect is insomnia. Contraindicated in pregnancy, breastfeeding, bleeding conditions, autoimmune disease such as rheumatoid arthritis, and heart conditions."}
+];
+const mmList = document.getElementById('mm-list');
+const mmDisplay = document.getElementById('mm-display');
+mmTopics.forEach((topic, i)=>{
+  const b = document.createElement('button');
+  b.className = 'mm-title';
+  b.textContent = topic.t;
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('.mm-title').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    mmDisplay.innerHTML = `<h3>${topic.t}</h3><div class="body">${topic.b}</div>`;
+  });
+  mmList.appendChild(b);
+});
+
+/* ================= FLASHCARDS DATA ================= */
+const flashcardsL1 = [["What are saponins?", "A group of glycosides that are widely distributed in the higher plants."], ["What two products does hydrolysis of a saponin yield?", "A sugar (glycon) and a nonpolar aglycon called a sapogenin."], ["Into what two classes are sapogenins divided according to their chemical nature?", "Steroidal saponins and tri-terpenoid saponins."], ["Steroidal saponins belong to which chemical type?", "The neutral type."], ["Tri-terpenoid saponins belong to which chemical type?", "The acidic type."], ["Name three sugars commonly released on hydrolysis of saponins.", "Arabinose, xylose, and glucose."], ["What are the two main properties of saponins?", "Foaming property and the ability to cause hemolysis of red blood cells."], ["Describe the foaming property of saponins.", "The ability to form lasting, persistent foam when shaken in aqueous solution."], ["What substance do saponins precipitate in the red blood cell membrane?", "Cholesterol."], ["Are saponins toxic when injected into the blood stream?", "Yes, they are extremely toxic."], ["Are saponins harmful when taken by mouth?", "No, they are not harmful orally."], ["Why are saponins not harmful when taken orally?", "Because they are not absorbed from the GIT."], ["Name a saponin-rich plant used in the preparation of non-alcoholic beverages.", "Sarsaparilla."], ["Are sapogenins used as therapeutic agents?", "No, they are not used as therapeutic agents."], ["What useful role do sapogenins serve instead of being therapeutic agents?", "They serve as a starting material for the chemical synthesis of steroidal hormones."], ["Where was cortisone originally isolated from?", "The adrenal cortex."], ["From what animal source was cortisone later synthesized?", "Certain bile acids of cattle."], ["What problem did the cattle-derived source of cortisone cause?", "It caused allergic reactions and limited the supply of cortisone."], ["Name the five outstanding plant steroids used for cortisone production.", "Diosgenin, Sarsapogenin, Hecogenin, Getogenin, and Smilagenin."], ["Name five food materials that contain significant amounts of saponins.", "Beans, lentils, soybeans, spinach, and oats."], ["What industrial use exploits the foaming property of saponins?", "Use as detergents in the cleaning industry."], ["What are saponins used as powerful emulsifiers of?", "Certain resins, fats, and fixed oils."], ["Why are saponins used as fish poisons?", "Because they are toxic, especially to cold-blooded animals, due to their hemolytic property."], ["How do saponins increase the absorption of many pharmacologically active substances?", "By acting as good emulsifiers."], ["Name two saponin-containing drugs used as expectorants.", "Ipecac and liquorice."], ["How many carbon atoms does the neutral-steroidal saponin type contain?", "C25."], ["How many carbon atoms does the acid-triterpenoid saponin type contain?", "C30."], ["What basic ring structure does the neutral-steroidal type contain?", "The cyclo-penta-phenanthrene (steroidal) nucleus."], ["What side chain is connected to the steroidal nucleus in neutral saponins?", "A spiroketal side chain."], ["What is the Oleanane family also called, structurally?", "Pentacyclic triterpenoid."], ["At which position is the glycosidic linkage found in both saponin types?", "Position 3."], ["What is the common biosynthetic origin of both saponin types?", "Mevalonic acid and isoprenoid units."], ["Which two rings form the spiroketal (ketal) in steroidal saponins?", "Rings E and F."], ["What name is implied by neutral (steroidal) saponins?", "Spirostan."], ["Which saponin type is more widely distributed in nature?", "Triterpenoid (acidic) saponins."], ["Give an example of a pentacyclic (Oleanane family) triterpenoid saponin.", "alpha-amyrin and beta-amyrin."], ["From which plant part is Glycyrrhiza (licorice) obtained?", "The dried rhizomes and roots."], ["From which species and family is licorice obtained?", "Glycyrrhiza glabra, family Leguminoseae."], ["What does the word Glycyrrhiza mean, and what does glabra mean?", "Sweet root; smooth."], ["Which countries supply most of the licorice today?", "Turkey, Greece, and Asia Minor."], ["What is the main saponin glycoside in licorice called?", "Glycyrrhizin."], ["Approximately how many times sweeter than sugar is glycyrrhizin?", "About 50 times."], ["What does glycyrrhizin yield on hydrolysis?", "Glycyrrhetinic acid plus two molecules of glucuronic acid."], ["Besides glycyrrhizin, what other class of glycoside does licorice contain?", "Flavonoid glycosides."], ["Which enzyme hydrolyzes glycyrrhizin into glycyrrhetinic acid?", "The glucuronidase enzyme."], ["What GIT action does licorice have, and against which bacterium is it effective?", "A good antispasmodic action; effective against H. pylori."], ["What two conditions can licorice syrup be used to treat?", "Gastroesophageal reflux (GERD) and heartburn."], ["Name two possible side effects of excessive licorice consumption.", "High blood pressure and low potassium levels."], ["From which plant and plant part is fenugreek obtained?", "The dried seeds of Trigonella foenum-graecum."], ["Fenugreek is a potential source of which sapogenin?", "Diosgenin."], ["Name three important fenugreek-producing countries.", "India, Morocco, and Egypt."], ["Name three medicinal properties demonstrated for fenugreek.", "Anti-diabetic, cholesterol-lowering, and anti-inflammatory."], ["What lactation and fertility benefits does fenugreek provide?", "Increases breast milk production and improves sex drive and fertility."], ["What menstrual complaint does fenugreek help relieve?", "Dysmenorrhea (menstrual pain)."], ["From which plant and plant part is ginseng obtained?", "The dried root of Panax ginseng."], ["What is the name of ginseng's main saponin glycoside?", "Ginsenoside, also called panaxoside."], ["Name three pharmacological uses of ginseng root.", "Sexual stimulant, antidiabetic, and immunity booster."], ["For how long must ginseng be taken according to the lecture?", "Up to 6 months."], ["What is the most common side effect of ginseng?", "Insomnia."], ["Name two conditions in which ginseng is contraindicated.", "Pregnancy and breastfeeding."]];
+const flashcardsL2 = [["A saponin forms stable foam in water and yet causes no harm when swallowed. Which single class property explains the foam, and which fact explains oral safety?", "The foam reflects the surfactant/emulsifying (foaming) property; oral safety is due to poor GIT absorption from high molecular weight and high polarity, not lack of hemolytic potential."], ["Why can a saponin be described as extremely toxic and yet be a normal ingredient of a soft drink at the same time?", "Hemolytic toxicity only appears if saponins reach the blood stream (e.g., by injection); taken by mouth they are safe because they are never absorbed from the GIT."], ["Sapogenins are not prescribed as drugs themselves. What is their real pharmaceutical value?", "They serve as starting materials for the chemical synthesis of steroidal hormones such as cortisone and sex hormones."], ["Why did research shift toward plant saponins to find a cortisone precursor instead of relying on cattle bile acids?", "The cattle bile acid source caused allergic reactions and could not supply enough cortisone, which limited its production."], ["Spinach and lentils are said to contain significant amounts of saponins, yet are eaten safely every day. Reconcile this with saponins' hemolytic property.", "Dietary saponins are not absorbed across the GIT, so their hemolytic activity never reaches the blood stream, keeping oral consumption safe."], ["Why are saponins useful both as industrial detergents and as beverage foam boosters?", "Both uses exploit the same foaming/emulsifying property that lowers surface tension and forms persistent foam."], ["Explain, mechanistically, why saponins make effective fish poisons.", "Their hemolytic action destroys red blood cell (and membrane) integrity, and cold-blooded aquatic animals are especially sensitive to this toxicity."], ["How does the emulsifying property of saponins translate into a pharmacological benefit?", "It increases the rate of absorption of other pharmacologically active substances administered alongside them."], ["What is the shared biochemical basis for using Ipecac and liquorice as expectorants?", "Their saponin content stimulates bronchial secretion and activates the ciliary epithelium of the bronchi."], ["Steroidal saponins are called C25 and triterpenoid saponins C30. What does this refer to, and how do their charge types differ?", "The numbers refer to the carbon count of the sapogenin skeleton; steroidal (C25) sapogenins are neutral, while triterpenoid (C30) sapogenins are acidic."], ["Name the two features shared by both steroidal and triterpenoid saponins despite their different skeletons.", "Both carry the glycosidic linkage at position 3, and both arise biosynthetically from mevalonic acid and isoprenoid units."], ["Why are rings E and F of a steroidal sapogenin specifically called a ketal?", "Because a carbon atom in that side chain is bonded to two oxygen atoms that are not on the same plane, a spiral (spiro) arrangement."], ["What does the implied name spirostan for neutral saponins refer to structurally?", "Their spiroketal side chain, formed by the spiro-fused rings E and F."], ["Diosgenin is called the principle sapogenin used by industry. For what class of products is it the key raw material?", "Sex hormones and corticosteroids, including cortisone, diuretic steroids, vitamin D, and combined oral contraceptives."], ["Ginsenoside and the amyrins are both triterpenoid saponins but belong to different sub-families. Name each family and ring type.", "Ginsenoside belongs to the Dammarane (tetracyclic) family; the amyrins belong to the Oleanane (pentacyclic) family."], ["Licorice loses its sweet taste on hydrolysis. Why?", "Hydrolysis by glucuronidase converts sweet glycyrrhizin into the aglycon glycyrrhetinic acid plus two glucuronic acid molecules, and the aglycon lacks the sweet taste of the intact glycoside."], ["A hypertensive patient chews licorice-flavored gum daily. What pharmacognostic warning applies, and why?", "Licorice can raise blood pressure and lower potassium, so patients with hypertension, heart or kidney disease, or a high salt intake should use it with caution."], ["How does licorice benefit both peptic ulcer risk and GERD, through two distinct actions?", "Its antibacterial action against H. pylori helps prevent gastric ulcers, while its use as a syrup separately relieves GERD and heartburn."], ["Fenugreek is used both as a spice and as a source of a specific steroidal sapogenin. Name it and one hormonal product it feeds into.", "Diosgenin; it is a starting material for combined oral contraceptives and cortisone."], ["Fenugreek is said to help manage diabetes through two mechanisms. What are they?", "By possibly reducing sugar absorption and by stimulating insulin."], ["Compare the reproductive-health benefits claimed for fenugreek and ginseng.", "Fenugreek improves sex drive/fertility and increases breast milk in lactating women; ginseng acts as a sexual stimulant used in erectile dysfunction."], ["Why must a patient on antidiabetic medication be cautious about also taking ginseng?", "Ginseng itself has antidiabetic (insulin-enhancing) activity and may interact with diabetes medications, risking an additive effect."], ["Compare the geographic history of licorice supply before and after 1870.", "Before 1870, Spain supplied practically the entire world's licorice; today Turkey, Greece, and Asia Minor supply most of it."], ["Explain why high molecular weight and high polarity are protective, not harmful, properties for orally ingested saponins.", "These properties prevent the molecule from crossing the GIT into the blood stream, so its hemolytic toxicity never gets the chance to act."], ["Sarsaparilla and licorice are both used in beverages, but for two different sensory reasons. What are they?", "Sarsaparilla is used for its saponin-driven froth, while licorice (glycyrrhizin) is used mainly for its sweet taste as well as foaming."], ["Steroidal saponins are precursors for corticosteroids and vitamin D. What feature of their nucleus makes this chemically plausible?", "Their shared cyclo-penta-phenanthrene steroidal nucleus, the same core found in corticosteroid and vitamin D structures."], ["Compare the toxicity of saponins by injection versus by mouth, and name the plant example used safely by mouth.", "Injected saponins are extremely toxic through hemolysis; taken orally they are safe due to poor absorption, and sarsaparilla is the safe oral example given."], ["Why does the lecture link expectorant action to both licorice and Ipecac even though they are different plants?", "Both contain saponins that share the same mechanism of stimulating bronchial secretion and activating the ciliary epithelium, regardless of plant source."], ["A cosmetic product lists ginseng extract as an ingredient. What does the lecture say about the evidence for this use?", "Ginseng is included in some cosmetic preparations, but those uses have not been shown to be clinically effective."], ["Explain the difference between classifying saponins by the genin part versus by the sugar (glycon) part.", "Saponins are classified by the genin (sapogenin) part into steroidal (C25) or triterpenoid (C30) types; the attached sugar, such as arabinose, xylose, or glucose, is not used for this classification."], ["Why does diosgenin appear in two different sections of the lecture, steroidal saponins and fenugreek?", "Because fenugreek is one of the plant sources rich in diosgenin, the same steroidal sapogenin described as the principal industrial raw material."], ["Where on the sapogenin skeleton does sugar attach, and how does this differ from the spiroketal side chain location?", "Sugar attaches at position 3 via a glycosidic linkage, which is a different site from the spiroketal side chain formed by rings E and F further along the skeleton."], ["Contrast the therapeutic status of sapogenins in general with that of glycyrrhizin specifically.", "Sapogenins in general are not used as therapeutic agents, but glycyrrhizin has direct pharmacological uses such as expectorant, antispasmodic, antibacterial, anti-GERD, and topical actions."], ["Explain why saponins increasing the absorption of co-administered drugs could be both useful and mechanistically linked to their toxicity.", "The useful emulsifying action that improves drug absorption is mechanistically the same surfactant property responsible for hemolysis if saponins ever reach the blood stream."], ["What two body systems does licorice affect directly, and by what different mechanisms?", "The GIT (antispasmodic and anti-H. pylori action) and the cardiovascular/electrolyte system (raising blood pressure and lowering potassium as a side effect)."], ["Compare fenugreek's and ginseng's proposed antidiabetic mechanisms.", "Fenugreek possibly reduces sugar absorption and stimulates insulin; ginseng is antidiabetic mainly by enhancing insulin production."], ["Why would a physician advise a pregnant patient to avoid ginseng even though it is a natural product?", "Ginseng is explicitly contraindicated in pregnancy, along with breastfeeding, bleeding conditions, autoimmune disease, and heart conditions, due to its systemic pharmacological activity."], ["Fenugreek increases breast milk production while ginseng is contraindicated in breastfeeding. What does this contrast illustrate?", "Different saponin-containing plants can have opposite reproductive/lactation effects, so each drug must be evaluated individually rather than assuming a class effect."], ["How does glycyrrhizin's hydrolysis mirror the general hydrolysis pattern described for saponins?", "Like any saponin, it splits into a sugar-related portion (two glucuronic acid molecules) and a nonpolar aglycon (glycyrrhetinic acid), following the same glycon/sapogenin pattern."], ["What is the enzyme-substrate relationship in the conversion of glycyrrhizin, and what happens to the sweet taste?", "The enzyme glucuronidase hydrolyzes glycyrrhizin, and the sweet taste is lost once the sugar acid units are cleaved off."], ["Why does diosgenin appear both as a sapogenin and as a listed drug in the lecture?", "As a sapogenin it is the industrial aglycon obtained from plants like fenugreek; as a drug it is listed among substances containing steroidal sapogenins for its direct role as a hormone-synthesis starting material."], ["How does the lecture resolve the apparent contradiction between saponins being food sources and being toxic?", "Dietary saponins are safe because they are poorly absorbed orally; toxicity only becomes relevant with injected (parenteral) exposure."], ["Licorice and fenugreek are both family Leguminoseae. What does this shared family suggest about their glycoside chemistry?", "Despite the shared family, their principal glycosides differ chemically; licorice yields the triterpenoid glycyrrhizin, while fenugreek is a source of the steroidal sapogenin diosgenin."], ["Why does increasing foaming appear as a benefit in industrial, beverage, and confectionery contexts alike?", "The same surfactant/foaming property of saponins is exploited across all three settings, one property with multiple applications."], ["Correct this statement: steroidal saponins are C25 because they contain 25 carbons in the sugar chain.", "The C25 count refers to the sapogenin (aglycon) skeleton itself, not the attached sugar, which is a separate part of the molecule such as arabinose, xylose, or glucose."], ["A pharmacist notes that both sapogenins and diosgenin are precursors for combined oral contraceptives. Is this one fact stated twice or two different facts?", "It is the same fact restated: diosgenin, a steroidal sapogenin, is the specific example behind the general statement that sapogenins act as starting material for combined oral contraceptives."], ["Explain why licorice's antibacterial action against H. pylori and its antispasmodic action are described as two separate GIT benefits.", "They act through different mechanisms, one microbiological (antibacterial, preventing gastric ulcers) and one motility-related (antispasmodic), even though both affect the GIT."], ["Compare the stated duration of use and main caution for ginseng with the caution profile given for licorice.", "Ginseng should be taken for up to 6 months with insomnia as its main side effect, while licorice's main cautions are high blood pressure and low potassium with no stated duration limit."], ["Why is glycyrrhizin classified as a triterpenoid saponin, consistent with the general C25/C30 classification described earlier?", "Because it is a large-molecular-weight glycoside whose aglycon, glycyrrhetinic acid, fits the acidic, oxygen-rich C30 triterpene sapogenin type rather than the neutral C25 steroidal type."], ["What overall principle links diosgenin's role in cortisone synthesis and glycyrrhizin's role as a flavoring/expectorant agent?", "Both are saponin-derived sapogenins/glycosides that each plant channels toward a different useful end, one as a chemical precursor and the other as a directly active constituent, illustrating the dual industrial and medicinal value of saponins."]];
+const flashcardsL3 = [["A saponin forms persistent foam and precipitates RBC cholesterol in vitro, yet shows no toxicity orally despite a lethal IV dose. Build the full explanation chain.", "High molecular weight and high polarity prevent GIT absorption, so orally the compound never reaches the blood stream to act on RBC membranes; IV administration bypasses this barrier and exposes RBCs directly to the hemolytic saponin, precipitating cholesterol, destroying the RBC wall, and releasing hemoglobin, explaining the identical intrinsic potency but opposite route-dependent outcomes."], ["Diosgenin, sarsapogenin, hecogenin, getogenin, and smilagenin are all cortisone precursors. Explain why plant sources replaced the cattle-bile-acid route.", "All five are structurally related steroidal (C25, spiroketal) sapogenins convertible toward corticosteroid structures; since cattle bile acids caused allergic reactions and limited supply, these more abundant, less immunogenic plant steroids offered a practical alternative raw-material route to the same synthetic endpoint."], ["Explain what tetracyclic versus pentacyclic means for ginsenoside and the amyrins, given both are C30 triterpenoids.", "Both share a C30 triterpene carbon framework, but the carbons are arranged into a different number of fused rings, four in the Dammarane (tetracyclic) skeleton of ginsenoside versus five in the Oleanane (pentacyclic) skeleton of the amyrins, so the same total carbon count is distributed differently among the rings."], ["Explain why the geometry of rings E and F in a steroidal sapogenin is specifically called spiro rather than a simple open-chain ketal.", "In the spiro arrangement, rings E and F share a single carbon atom as their junction, and that carbon's two C-O bonds project into different, non-coplanar ring directions, unlike an open-chain ketal where the C-O bonds lie within one non-cyclic framework; this spiro-fusion is what gives steroidal saponins the name spirostan."], ["Both saponin classes share position-3 linkage and a mevalonic acid origin despite differing in carbon count and charge. Why does this make biochemical sense?", "Both classes derive from the same isoprenoid building blocks, which are simply cyclized and oxidized to different extents to yield either a C25 steroidal or C30 triterpenoid nucleus; since the initial precursor is shared, the sugar-attachment site (position 3) is conserved even though the final aglycons diverge in ring number and acid-base character."], ["Glycyrrhizin's glycon is glucuronic acid rather than the arabinose/xylose/glucose usually cited for saponins. What does this reveal about the glycon component?", "It shows the glycon portion of saponins is chemically variable and can be a sugar acid rather than a neutral sugar; in licorice this specific glycon (glucuronic acid) is what gives the intact glycoside its intense sweetness, a property lost once those sugar acid units are removed by hydrolysis."], ["A hypertensive, hypokalemic patient is found to be a heavy daily consumer of licorice candy. Explain the likely causal link and the counseling point.", "Chronic high-dose licorice intake is a recognized cause of raised blood pressure and low potassium, and patients with high salt intake or existing hypertension, heart, or kidney disease are specifically more sensitive; the patient should be counseled to stop or reduce licorice intake, since it likely contains enough glycyrrhizin to worsen their condition."], ["Diosgenin is both a non-therapeutic synthetic precursor and a constituent credited with direct antidiabetic and anti-inflammatory activity in fenugreek. Is this a contradiction?", "No; the non-therapeutic statement refers to the pure isolated sapogenin, which must be chemically converted into a finished hormone drug, while the activities attributed to fenugreek reflect the crude seed extract's intrinsic biological effect when consumed as a whole drug, two different levels of use that are not mutually exclusive."], ["Compare the mechanisms proposed for fenugreek's and ginseng's antidiabetic activity, and identify which is framed as purely insulin-related.", "Ginseng's antidiabetic action is framed purely as enhancing insulin production, whereas fenugreek combines a sugar-absorption-reducing effect with an insulin-stimulating effect, making its proposed mechanism broader than ginseng's single pathway."], ["Triterpenoid saponins are more widely distributed in nature, yet diosgenin (a steroidal sapogenin) is the industry's principal sapogenin. Reconcile this.", "Natural abundance and industrial importance are independent; triterpenoids are simply more common in the plant kingdom overall, but diosgenin dominates industrially because its spiroketal side chain offers a structurally efficient, high-yield route to steroidal hormone synthesis, so a rarer class can still lead in application."], ["Ginseng may interact with diabetes, blood, and depression medications. Propose the mechanistic basis for each interaction.", "The insulin-enhancing antidiabetic action explains interaction with diabetes drugs through additive hypoglycemia risk; the caution around bleeding conditions suggests an effect on coagulation, explaining interaction with blood medications; and ginseng's stimulant/hormonal action on the nervous system likely underlies the interaction with depression medications."], ["Explain the shared physicochemical property unifying saponins' roles as industrial emulsifiers, detergents, and pharmacological absorption enhancers.", "All three uses stem from saponins' amphipathic (surfactant) architecture, a polar sugar region plus a nonpolar sapogenin core, which lowers interfacial tension; this same interfacial activity disperses fats/oils/resins industrially and improves the wetting and absorption of co-administered drugs pharmaceutically."], ["Trace the full logical chain supporting the use of fenugreek-derived diosgenin as a cortisone precursor.", "Fenugreek is a documented source of diosgenin; diosgenin is listed among the outstanding plant steroids for cortisone production; and although sapogenins are not therapeutic agents themselves, they are valued as chemical-synthesis starting materials for steroidal hormones, so diosgenin from fenugreek is a chemically valid alternative to the allergy-prone cattle bile acid route."], ["Saponins are safe orally yet used as fish poisons for cold-blooded animals. Why is this not a contradiction?", "Fish and aquatic cold-blooded animals absorb saponins directly through gills and mucous membranes from the surrounding water, bypassing the GIT mucosal barrier that protects land animals from oral saponins, so the poor-GIT-absorption protection simply does not apply to this exposure route."], ["What structural criteria, beyond carbon count and charge alone, would be needed to reliably distinguish steroidal from triterpenoid saponin extracts?", "Carbon count (C25 vs C30) and acid-base behavior (neutral vs acidic) are useful screening criteria, but confirming the presence of a true spiroketal (rings E and F) for steroidal type, or the tetracyclic versus pentacyclic ring fusion for triterpenoid type, requires structural confirmation beyond simple counting or acid-base testing of the isolated aglycon."], ["Is describing licorice as an expectorant redundant with the general pharmacological-applications section on saponin expectorants?", "No, it is illustrative rather than redundant; the general section establishes the class-wide mechanism using Ipecac and liquorice as examples, while the licorice-specific section applies and elaborates that same mechanism to one particular, clinically important drug monograph."], ["Fenugreek and licorice share family Leguminoseae yet yield chemically distinct principal glycosides. What does this teach about predicting saponin chemotype from plant family?", "Shared plant family does not reliably predict saponin chemotype; fenugreek yields the steroidal sapogenin diosgenin while licorice yields the triterpenoid glycyrrhizin, so classification must rely on structural and biosynthetic criteria rather than taxonomic family alone."], ["Propose the most plausible mechanistic link for fenugreek's hair-loss benefit and ginseng's immunity-boosting claim, using only each drug's other stated properties.", "Fenugreek's positive effect on testosterone and estrogen levels is the most plausible route to a hair-related benefit, since hormone balance affects follicle health; ginseng's stated antioxidant and anti-stress properties most plausibly underlie its immunity-boosting claim, since reducing oxidative and systemic stress supports immune function."], ["A formulator wants a saponin to act as both a foaming agent and a bioavailability enhancer in one oral product. What safety tension exists, and is it a real concern orally?", "The same surfactant property behind foaming and enhanced absorption is mechanistically linked to hemolysis if saponins reach the blood stream, but for an oral product this is generally not a real concern because high molecular weight and polarity prevent significant systemic absorption from the GIT in the first place."], ["Diosgenin's spiroketal carries a methyl group at position 25. How does this relate to the C25 designation of steroidal saponins?", "The C25 designation reflects the total carbon count of the steroidal sapogenin skeleton, the four steroidal rings plus the E/F spiroketal side chain, and carbon 25 is the terminal carbon at the outer end of that very side chain, marking the boundary that defines the C25 skeleton."], ["Explain how gill/RBC membrane disruption unifies saponins' fish-poison toxicity with their IV hemolytic toxicity in mammals.", "In both cases the underlying mechanism is the same surfactant-driven disruption of cholesterol-containing cell membranes; it is only the exposure route and target tissue, gills in aquatic animals versus the blood stream in injected mammals, that differ, not the toxic mechanism itself."], ["Is the Chemical Classification section's C25/C30 split a different system from the earlier steroidal/tri-terpenoid split given at the start of the lecture?", "No, it is the same dichotomy presented at two levels of detail; the opening slide introduces the split without structural detail, while the Chemical Classification section revisits it with the defining carbon counts, ring structures, and sub-family names."], ["Would a neutral C30 sapogenin fit the lecture's classification scheme? Justify the answer.", "No, it would not fit cleanly, since the scheme pairs C25 with neutral/steroidal and C30 with acidic/triterpenoid; a neutral C30 example would be an exception requiring re-examination of its oxygen-containing functional groups rather than automatic placement in either class by carbon count alone."], ["What epistemic distinction does the lecture draw between ginseng's internal pharmacological uses and its inclusion in cosmetic preparations?", "It distinguishes evidence-supported internal uses, such as antidiabetic, anti-stress, and immunity-boosting activity, from commercial cosmetic inclusion, explicitly noting that cosmetic uses of ginseng have not been shown to be clinically effective."], ["Predict what would happen to a licorice cough syrup's taste and activity if stored under conditions favoring glucuronidase-mediated degradation of glycyrrhizin.", "Progressive hydrolysis would convert glycyrrhizin into glycyrrhetinic acid plus glucuronic acid, so the syrup would likely lose its characteristic sweetness while its pharmacological profile shifted toward whatever activity belongs to the aglycon rather than the intact glycoside."], ["Why does the lecture single out diosgenin, and not the other four cortisone-precursor sapogenins, as the principle sapogenin used by industry?", "All five are chemically viable precursors, but diosgenin has emerged as the practically dominant industrial choice based on its abundance from sources like fenugreek and its synthetic efficiency, while sarsapogenin, hecogenin, getogenin, and smilagenin remain recognized but secondary contributors."], ["Evaluate the claim that a shared mevalonic acid origin means steroidal and triterpenoid saponins must have identical pharmacological effects.", "This is false; a shared biosynthetic starting point only explains the common metabolic origin, not the final activity, which depends on downstream structure, as shown by diosgenin's role as a hormone precursor versus glycyrrhizin's and ginsenoside's direct, structure-specific pharmacological actions."], ["How does the position-3 glycosidic linkage relate to the general hydrolysis reaction described for all saponins?", "Position 3 is precisely the chemical bond broken during hydrolysis; the sugar is attached to the aglycon at carbon 3 via a glycosidic bond, and cleavage of this bond releases the free sugar and the nonpolar sapogenin, so position 3 is simply the structural location of the general hydrolysis reaction."], ["Are the cautions against ginseng in autoimmune disease and against licorice in kidney disease based on the same pharmacological rationale?", "No; the ginseng caution relates to its immune-modulating activity, which could overstimulate a dysregulated immune system, while the licorice caution relates to its electrolyte and blood-pressure effects, which could worsen fluid and electrolyte handling in already-compromised kidneys, two different rationales."], ["If glycyrrhetinic acid retains licorice's antispasmodic and antibacterial actions but not its sweetness, what does this suggest about which molecular part carries which property?", "It suggests sweetness depends on the intact glycoside (the attached glucuronic acid units), while the pharmacological actions are attributable more to the aglycon or the whole glycoside independent of sweetness, meaning the sensory and pharmacological roles can be structurally dissociated."], ["Explain why fenugreek's traditional medicinal use does not contradict diosgenin's classification as a non-therapeutic synthetic precursor.", "No contradiction exists because fenugreek's traditional use reflects the whole seed extract's intrinsic pharmacological activity when consumed as a crude drug, whereas diosgenin's non-therapeutic classification refers narrowly to the isolated pure sapogenin's need for further chemical synthesis to become a finished hormone drug."], ["Explain the shared surfactant chemistry underlying saponins' description as foam-formers, fat/oil emulsifiers, and absorption enhancers.", "All three descriptions arise from the same amphipathic molecular structure, a polar sugar-bearing region and a nonpolar sapogenin region, that allows the molecule to orient at interfaces, lowering surface or interfacial tension whether at an air-water, oil-water, or membrane-drug interface."], ["Why would emulsification and toxicity be only a partially correct answer to naming the two main properties of saponins?", "The lecture specifically names foaming property and hemolysis as the two properties; emulsification is closely related to foaming and hemolysis is a manifestation of toxicity, but the precise examinable terms differ from these broader synonyms."], ["Reconcile sapogenins being non-therapeutic with steroidal saponins being described as of great pharmaceutical importance.", "These are complementary statements; sapogenins lack direct therapeutic use as finished drugs, but their pharmaceutical importance lies specifically in their role as precursor material for synthesizing sex hormones and corticosteroids, an industrial rather than a direct clinical role."], ["Would a hexacyclic triterpenoid sapogenin fit either subfamily named in the lecture, and what does this imply about the classification's completeness?", "It would not fit either named subfamily, since only tetracyclic (Dammarane) and pentacyclic (Oleanane) are described; this implies the two named families are representative common examples rather than an exhaustive account of every possible triterpenoid ring-fusion pattern."], ["Propose a mechanistic connection between saponins' general membrane-disrupting hemolytic action and glycyrrhizin's antibacterial activity against H. pylori.", "The same fundamental membrane-interacting, surfactant-driven action that disrupts cholesterol-containing RBC membranes may, in a modified or more selective way, also compromise bacterial cell membrane or wall integrity, providing a plausible basis for the antibacterial effect."], ["Explain why combined oral contraceptives are mentioned both under general saponin applications and under fenugreek's medicinal uses.", "The general section first establishes, at the class level, that sapogenins are starting precursors for hormonal drugs including combined oral contraceptives; the fenugreek section then grounds this same general fact in the specific example of diosgenin, moving from principle to concrete plant-drug example."], ["Evaluate the plausibility, and any added risk, of combining fenugreek and ginseng extracts in a single male reproductive health product.", "The combination is plausible since fenugreek improves sex drive and fertility via testosterone/estrogen effects and ginseng is a sexual stimulant used in erectile dysfunction; however, ginseng's interactions with diabetes, blood, and depression medications and its contraindications add theoretical risk that should be considered before combined use."], ["Why does the lecture keep steroidal and triterpenoid saponins as two distinct chemical classes despite both being pharmaceutically important?", "They differ fundamentally in skeleton size (C25 vs C30), charge (neutral vs acidic), key structural feature (spiroketal vs multi-oxygenated triterpene core), and chemical application (hormone-synthesis precursor vs directly bioactive glycosides), justifying separate classification despite shared pharmaceutical relevance."], ["As a capstone, connect the concepts of hydrolysis, the foaming/hemolytic duality, the C25/C30 split, and the three named drugs into one coherent picture of saponin glycosides.", "Saponins hydrolyze into a sugar and a nonpolar sapogenin; their foaming and hemolytic properties both trace to the same surfactant/membrane-active chemistry, safe orally but dangerous parenterally; sapogenins are classified by carbon count into neutral C25 steroidal (precursor to corticosteroids, exemplified by diosgenin) or acidic C30 triterpenoid (Dammarane or Oleanane, exemplified by ginsenoside and the amyrins) types; and licorice, fenugreek, and ginseng each illustrate this framework through a distinct saponin with its own industrial, synthetic, and direct pharmacological roles."]];
+
+let fcLevel = 1;
+const fcDecks = {1: flashcardsL1, 2: flashcardsL2, 3: flashcardsL3};
+let currentDeck = fcDecks[1];
+
+const fcGrid = document.getElementById('fc-grid');
+function renderFlashcards(list){
+  fcGrid.innerHTML='';
+  list.forEach((pair, i)=>{
+    const card = document.createElement('div');
+    card.className='fc-card';
+    const frontDense = pair[0].length > 95 ? ' fc-dense' : '';
+    const backDense = pair[1].length > 95 ? ' fc-dense' : '';
+    card.innerHTML = `
+      <div class="fc-inner">
+        <div class="fc-face fc-front${frontDense}"><span class="fc-idx">${i+1}</span>${pair[0]}</div>
+        <div class="fc-face fc-back${backDense}"><span class="fc-idx">${i+1}</span>${pair[1]}</div>
+      </div>`;
+    card.addEventListener('click', ()=> card.classList.toggle('flipped'));
+    fcGrid.appendChild(card);
+  });
+  document.getElementById('fc-count').textContent = list.length + ' cards';
+}
+renderFlashcards(currentDeck);
+document.getElementById('fc-shuffle').addEventListener('click', ()=>{
+  const shuffled = [...currentDeck].sort(()=>Math.random()-0.5);
+  currentDeck = shuffled;
+  renderFlashcards(shuffled);
+});
+document.getElementById('fc-flipall').addEventListener('click', ()=>{
+  document.querySelectorAll('.fc-card').forEach(c=>c.classList.remove('flipped'));
+});
+document.querySelectorAll('#fc-level-row .level-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('#fc-level-row .level-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    fcLevel = parseInt(btn.dataset.level, 10);
+    currentDeck = fcDecks[fcLevel];
+    renderFlashcards(currentDeck);
+  });
+});
+
+/* ================= QUIZ DATA ================= */
+const quizL1 = [["Saponins are a group of glycosides that are widely distributed in:", ["The higher plants", "Bacteria only", "Marine algae only", "Fungi only"]], ["Hydrolysis of a saponin yields sugar plus:", ["A nonpolar aglycon called sapogenin", "A polar aglycon called flavonoid", "A protein aglycon", "An alkaloid aglycon"]], ["According to chemical nature, sapogenins are classified into:", ["Steroidal and tri-terpenoid saponins", "Cardiac and cyanogenic saponins", "Anthraquinone and coumarin saponins", "Tannin and lignin saponins"]], ["Steroidal saponins are of which type?", ["Neutral type", "Acidic type", "Basic type", "Amphoteric type"]], ["Tri-terpenoid saponins are of which type?", ["Acidic type", "Neutral type", "Basic type", "Amphoteric type"]], ["The two main properties of saponins are foaming property and:", ["Hemolysis of red blood cells", "Anticoagulant activity", "Diuretic activity", "Local anesthetic activity"]], ["The foaming property of saponins refers to their ability to:", ["Form lasting persistent foam when shaken in aqueous solution", "Dissolve instantly without residue", "Crystallize in cold water", "Change color in acid"]], ["Saponins cause hemolysis by precipitating which substance in the RBC membrane?", ["Cholesterol", "Phospholipid only", "Hemoglobin directly", "Fibrin"]], ["Saponins injected into the blood stream are:", ["Extremely toxic", "Completely harmless", "Mildly sedative", "Only locally irritant"]], ["Saponins taken orally by mouth are:", ["Not harmful, because they are not absorbed from the GIT", "Extremely toxic, same as IV", "Only toxic in children", "Toxic only if taken with food"]], ["Sapogenins are used as:", ["A starting material for chemical synthesis of steroidal hormones", "Direct therapeutic agents only", "Preservatives in food", "Local antiseptics"]], ["Before plant sources were used, cortisone was synthesized from:", ["Certain bile acids of cattle", "Fish liver oil", "Human plasma", "Egg yolk"]], ["The animal (cattle) source of cortisone caused which problem?", ["Allergic reactions and limited supply", "No side effects at all", "Improved yield with no cost", "Increased sweetness"]], ["Which food materials are cited as containing significant amounts of saponins?", ["Beans, lentils, soybeans, spinach, and oats", "Only citrus fruits", "Only dairy products", "Only red meat"]], ["Saponins are used in the cleaning industry mainly because of their:", ["Foaming property", "Antibacterial property", "Anti-inflammatory property", "Coloring property"]], ["Saponins act as powerful emulsifiers of:", ["Certain resins, fats, and fixed oils", "Metals only", "Salts only", "Gases only"]], ["Saponins are used as a starting precursor for which hormonal drugs?", ["Cortisone and combined oral contraceptives", "Insulin and glucagon", "Antibiotics and antivirals", "Vaccines"]], ["Saponins increase the rate of absorption of pharmacologically active substances because they are:", ["Good emulsifiers", "Poor emulsifiers", "Highly volatile", "Strong acids"]], ["Which two saponin-containing drugs are used as expectorants?", ["Ipecac and liquorice", "Aspirin and paracetamol", "Digoxin and quinidine", "Morphine and codeine"]], ["The neutral-steroidal saponin type contains how many carbon atoms?", ["C25", "C21", "C27", "C30"]], ["The acid-triterpenoid saponin type contains how many carbon atoms?", ["C30", "C25", "C21", "C19"]], ["The neutral-steroidal type contains which basic nucleus?", ["Cyclo-penta-phenanthrene (steroidal) nucleus", "Furanocoumarin nucleus", "Indole nucleus", "Anthraquinone nucleus"]], ["The steroidal nucleus in neutral saponins is connected to a:", ["Spiroketal side chain", "Sugar-only side chain", "Carboxylic acid side chain", "Amino side chain"]], ["The Dammarane family of triterpenoid sapogenins is described as:", ["Tetracyclic triterpenoid", "Pentacyclic triterpenoid", "Bicyclic triterpenoid", "Monocyclic triterpenoid"]], ["The Oleanane family of triterpenoid sapogenins is described as:", ["Pentacyclic triterpenoid", "Tetracyclic triterpenoid", "Bicyclic triterpenoid", "Monocyclic triterpenoid"]], ["Both types of saponins have the glycosidic linkage at which position?", ["Position 3", "Position 1", "Position 17", "Position 25"]], ["In steroidal sapogenins, which two rings form the spiroketal?", ["Rings E and F", "Rings A and B", "Rings C and D", "Rings B and C"]], ["Which sapogenin is described as the principle one used by industry?", ["Diosgenin", "Hecogenin", "Getogenin", "Smilagenin"]], ["Which saponin type is more widely distributed in nature compared to the other?", ["Triterpenoid (acidic) saponins", "Steroidal (neutral) saponins", "Both are equally distributed", "Neither occurs naturally"]], ["Ginsenoside is an example of which triterpenoid sub-family?", ["Tetracyclic triterpenoid (Dammarane family)", "Pentacyclic triterpenoid (Oleanane family)", "Steroidal (spirostan) family", "Cardenolide family"]], ["Glycyrrhiza (licorice) is the dried rhizomes and roots of:", ["Glycyrrhiza glabra", "Panax ginseng", "Trigonella foenum-graecum", "Digitalis purpurea"]], ["Glycyrrhiza glabra belongs to which plant family?", ["Leguminoseae", "Solanaceae", "Apiaceae", "Rosaceae"]], ["The word Glycyrrhiza, of Greek origin, means:", ["Sweet root", "Bitter root", "Sour root", "Smooth leaf"]], ["Until 1870, which country produced practically the entire world's supply of licorice?", ["Spain", "Egypt", "India", "China"]], ["The main triterpenoid saponin glycoside in licorice is called:", ["Glycyrrhizin", "Diosgenin", "Ginsenoside", "Sarsapogenin"]], ["Glycyrrhizin is approximately how many times as sweet as sugar?", ["50 times", "5 times", "500 times", "15 times"]], ["Upon hydrolysis, glycyrrhizin loses its sweet taste and is converted to:", ["Glycyrrhetinic acid plus two molecules of glucuronic acid", "Diosgenin plus glucose", "Sarsapogenin plus xylose", "Panaxoside plus arabinose"]], ["Which enzyme hydrolyzes glycyrrhizin into glycyrrhetinic acid?", ["Glucuronidase enzyme", "Amylase enzyme", "Lipase enzyme", "Protease enzyme"]], ["Licorice is used in cough syrups as a valuable:", ["Flavoring and sweetening agent", "Preservative only", "Coloring agent only", "Diluent only"]], ["Licorice is used in many digestive disorders as a good:", ["Antispasmodic", "Laxative only", "Emetic", "Purgative"]], ["Licorice has been effective as an antibacterial agent against:", ["H. pylori", "E. coli only", "Salmonella only", "Staphylococcus only"]], ["As a syrup, licorice has been described to treat:", ["Gastroesophageal reflux (GERD) and heart burn", "Peptic perforation only", "Appendicitis", "Gallstones"]], ["Licorice topical preparations are used for treating:", ["Eczema", "Psoriasis specifically", "Acne specifically", "Vitiligo specifically"]], ["Potential side effects of licorice include high blood pressure, low potassium levels, weakness, and:", ["Irregular heart rhythms", "Improved kidney function", "Weight loss", "Hair growth"]], ["Fenugreek is the dried seeds of:", ["Trigonella foenum-graecum", "Glycyrrhiza glabra", "Panax ginseng", "Papaver somniferum"]], ["Fenugreek is a potential source of which sapogenin?", ["Diosgenin", "Glycyrrhizin", "Ginsenoside", "Sarsapogenin"]], ["The main constituent of fenugreek is:", ["Diosgenin", "Glycyrrhizin", "Panaxoside", "Sarsapogenin"]], ["Which of the following properties has been demonstrated for fenugreek?", ["Anti diabetic and cholesterol-lowering properties", "Antiviral and antitumor properties only", "Anticoagulant and thrombolytic properties only", "Antifungal and antiparasitic properties only"]], ["Diosgenin is a starting material for which two products?", ["Combined oral contraceptives and cortisone", "Insulin and digoxin", "Aspirin and paracetamol", "Morphine and codeine"]], ["Fenugreek is described as helping to increase:", ["Breast milk production in lactating women", "Blood clotting time only", "Bone density directly", "Visual acuity"]], ["Fenugreek is said to improve sex drive and fertility through a positive effect on:", ["Testosterone and estrogen level", "Insulin and glucagon level", "Thyroid hormone level", "Growth hormone level"]], ["Ginseng is the dried root of:", ["Panax ginseng", "Glycyrrhiza glabra", "Trigonella foenum-graecum", "Rauwolfia serpentina"]], ["Folk medicine attributes to ginseng roles such as aphrodisiac, stimulant, and:", ["Type II diabetes treatment", "Antibiotic treatment", "Vaccine adjuvant", "Anesthetic agent"]], ["Panax ginseng contains a saponin glycoside called ginsenoside, also known as:", ["Panaxoside", "Glycyrrhizin", "Diosgenin", "Sarsapogenin"]], ["Ginsenoside (panaxoside) has which type of nucleus?", ["A triterpenoid nucleus", "A steroidal nucleus", "An alkaloid nucleus", "A flavonoid nucleus"]], ["Ginseng root is used as a sexual stimulant in:", ["Erectile dysfunction", "Diabetic neuropathy only", "Migraine only", "Osteoarthritis only"]], ["Ginseng is described as antidiabetic because it:", ["Enhances insulin production", "Blocks insulin receptors", "Destroys pancreatic beta cells", "Increases blood glucose"]], ["According to the lecture, ginseng must be taken for up to:", ["6 months", "6 days", "6 weeks", "6 years"]], ["Ginseng may interact with medications for:", ["Diabetes mellitus, blood, and depression", "Only antibiotics", "Only antacids", "Only vitamins"]], ["The most common side effect of ginseng is:", ["Insomnia", "Drowsiness", "Hair loss", "Weight gain"]]];
+const quizL2 = [["A saponin is extremely toxic by IV injection but harmless by mouth. What best explains this?", ["It is not absorbed from the GIT, so it never reaches the blood stream orally", "It is destroyed by stomach acid before absorption", "It only becomes toxic after liver metabolism", "IV administration inactivates the toxin"]], ["Why are saponins useful both as industrial detergents and as agents that increase beverage foam?", ["Both uses depend on the same foaming/surfactant property", "Detergent use depends on hemolysis, beverage use on sweetness", "Both uses depend on their acidic pH", "Both uses depend on their antibacterial action"]], ["Why does sapogenin research focus on finding a cortisone precursor from saponin-containing plants?", ["Because the earlier cattle-bile-acid source caused allergic reactions and limited supply", "Because plant sapogenins are directly active as cortisone with no synthesis needed", "Because cattle bile acids are more expensive than plants", "Because plant sources contain no sapogenins at all"]], ["Beans, lentils, and spinach contain significant saponins yet are safely eaten daily. Why?", ["Dietary saponins are poorly absorbed from the GIT", "Cooking destroys all saponins before eating", "These foods actually contain no true saponins", "Saponins in food are non-hemolytic by nature"]], ["Why are saponins effective as fish-poisons but not typically dangerous to humans eating the same plant?", ["Aquatic animals absorb saponins directly through gills, bypassing the GIT barrier that protects humans orally", "Fish are naturally more resistant to hemolysis than humans", "Saponins are only toxic in salt water, not fresh water", "Humans metabolize saponins into inactive forms before absorption"]], ["The emulsifying property of saponins contributes to which pharmacological effect?", ["Increasing the rate of absorption of co-administered active substances", "Decreasing gastric motility", "Increasing the excretion rate of drugs", "Reducing plasma protein binding"]], ["What is the shared mechanistic basis for using both Ipecac and liquorice as expectorants?", ["Their saponins stimulate bronchial secretion and activate ciliary epithelium", "Both directly relax bronchial smooth muscle", "Both act as central cough suppressants", "Both reduce mucus viscosity chemically"]], ["Steroidal (C25) sapogenins are neutral while triterpenoid (C30) sapogenins are acidic. What do the C25/C30 numbers refer to?", ["The carbon count of the sapogenin (aglycon) skeleton", "The carbon count of the attached sugar chain", "The number of glycosidic bonds present", "The molecular weight in kilodaltons"]], ["Which two features are shared by both steroidal and triterpenoid saponins despite their structural differences?", ["Glycosidic linkage at position 3, and a common mevalonic acid/isoprenoid biosynthetic origin", "Both are neutral in charge and both contain nitrogen", "Both are C25 and both lack a sugar unit", "Both are synthesized only in animal tissue"]], ["Rings E and F in a steroidal sapogenin are called a ketal because:", ["A carbon atom is bonded to two oxygen atoms that are not on the same plane (spiro arrangement)", "They contain a nitrogen atom bridging two rings", "They are fused to an aromatic ring system", "They contain a lactone bridge"]], ["The name spirostan for neutral saponins refers structurally to:", ["The spiroketal side chain formed by rings E and F", "The presence of a steroidal A-ring double bond", "The pentacyclic Oleanane skeleton", "The attachment of glucuronic acid"]], ["Diosgenin, called the principle industrial sapogenin, is a key raw material for which class of products?", ["Sex hormones and corticosteroids, including cortisone and oral contraceptives", "Antibiotics and antifungals", "Local anesthetics", "Anticoagulants"]], ["Ginsenoside and the amyrins are both triterpenoid saponins from different sub-families. Which pairing is correct?", ["Ginsenoside is Dammarane (tetracyclic); amyrins are Oleanane (pentacyclic)", "Ginsenoside is Oleanane (pentacyclic); amyrins are Dammarane (tetracyclic)", "Both belong to the Dammarane (tetracyclic) family", "Both belong to the Oleanane (pentacyclic) family"]], ["Why does licorice lose its sweet taste when glycyrrhizin is hydrolyzed?", ["The sweet glycoside is broken into glycyrrhetinic acid and glucuronic acid, and the aglycon is not sweet", "Hydrolysis destroys the flavonoid glycosides responsible for sweetness", "Heat during hydrolysis caramelizes and masks the sweetness", "Hydrolysis converts glycyrrhizin into a bitter alkaloid"]], ["A hypertensive patient eats licorice candy daily. What is the main pharmacological concern?", ["Licorice can raise blood pressure and lower potassium, worsening hypertension", "Licorice has no cardiovascular effects and is completely safe", "Licorice will lower the patient's blood pressure further, causing hypotension", "Licorice interferes only with blood glucose, not blood pressure"]], ["Licorice benefits both peptic ulcer risk and GERD through which two distinct actions?", ["Antibacterial action against H. pylori, and a separate anti-reflux/antacid-like syrup action", "A single antispasmodic action covers both conditions", "Both benefits come from its sweetening action alone", "Both benefits come from its expectorant action alone"]], ["Fenugreek is both a spice and a source of diosgenin. Diosgenin from fenugreek is used as a starting material for:", ["Combined oral contraceptives and cortisone", "Antibiotics and antivirals", "Vitamin C supplements", "Anticoagulant drugs"]], ["Fenugreek is said to help manage diabetes possibly by which two mechanisms?", ["Reducing sugar absorption and stimulating insulin", "Increasing renal glucose reabsorption and inhibiting insulin", "Blocking glucagon release only", "Increasing intestinal transit time only"]], ["Which statement correctly compares reproductive-health claims of fenugreek and ginseng?", ["Fenugreek affects testosterone/estrogen and lactation; ginseng acts as a sexual stimulant in erectile dysfunction", "Both act identically through insulin-mediated pathways", "Fenugreek is contraindicated in pregnancy while ginseng increases breast milk", "Neither drug has any reproductive-related claims"]], ["Why should a patient on antidiabetic medication be cautious about also taking ginseng?", ["Ginseng itself enhances insulin production and may add to the medication's effect", "Ginseng blocks the action of all oral hypoglycemics", "Ginseng has no relationship to glucose metabolism", "Ginseng only affects blood pressure, not glucose"]], ["Before and after 1870, licorice's main global supplier changed from:", ["Spain, to Turkey/Greece/Asia Minor", "Egypt, to India/Morocco", "China, to the United States", "India, to Brazil"]], ["High molecular weight and high polarity protect against oral saponin toxicity because they:", ["Prevent the molecule from crossing the GIT into the blood stream", "Increase the rate of GIT absorption safely", "Convert saponins into inactive salts in the stomach", "Make saponins volatile and exhaled before absorption"]], ["Sarsaparilla and licorice are both added to beverages, but for different primary reasons. Which is correct?", ["Sarsaparilla mainly for froth; licorice mainly for sweetness (plus foam)", "Both purely for their bitter flavor", "Both purely as preservatives", "Sarsaparilla for color; licorice for viscosity"]], ["Steroidal saponins are plausible precursors for corticosteroids and vitamin D because they share which structural feature?", ["The cyclo-penta-phenanthrene steroidal nucleus", "A flavonoid ring system", "An indole alkaloid core", "A cyanogenic glycoside backbone"]], ["Which statement about oral versus IV saponin toxicity is correct, using the lecture's own example?", ["IV: extremely toxic (hemolysis); Oral: safe, as shown by sarsaparilla in beverages", "Both routes are equally toxic", "Oral: extremely toxic; IV: completely safe", "Neither route produces any toxicity"]], ["Ipecac and liquorice are grouped together in the lecture because both:", ["Contain saponins that stimulate bronchial secretion via the same mechanism", "Are steroidal saponins with an identical carbon skeleton", "Cause hemolysis when taken orally", "Are contraindicated in pregnancy"]], ["According to the lecture, what is the evidentiary status of ginseng in cosmetic preparations?", ["Included in some products, but not shown to be clinically effective", "Proven superior to all other cosmetic actives", "Banned from cosmetic use due to toxicity", "The primary FDA-approved anti-aging ingredient"]], ["Saponins are classified into steroidal and triterpenoid types based on:", ["The genin (sapogenin/aglycon) part, not the sugar part", "The type of sugar attached (glycon) only", "Their molecular color reaction only", "Their solubility in water alone"]], ["Diosgenin appears both in the 'Steroidal Saponins' and 'Fenugreek' sections because:", ["Fenugreek is one of the plant sources rich in diosgenin", "Diosgenin is actually a triterpenoid, not steroidal", "Fenugreek and Glycyrrhiza are the same plant", "Diosgenin is unrelated to fenugreek's constituents"]], ["Where does the sugar attach on a saponin's aglycon skeleton, relative to the spiroketal side chain?", ["At position 3, a separate site from the E/F spiroketal side chain", "Directly on the spiroketal oxygen atoms", "At position 25, the same site as the spiroketal methyl", "There is no fixed attachment site"]], ["How does the therapeutic status of glycyrrhizin differ from that of sapogenins in general?", ["Sapogenins in general are non-therapeutic; glycyrrhizin has direct pharmacological uses", "Both are equally non-therapeutic with no direct clinical uses", "Both are used only as chemical synthesis intermediates", "Glycyrrhizin is non-therapeutic while other sapogenins are all therapeutic"]], ["Saponins that improve drug absorption and saponins that cause hemolysis both rely on which shared property?", ["Their surfactant/emulsifying (amphipathic) action", "Their acidic pH", "Their high melting point", "Their nitrogen content"]], ["Licorice's effects on the GIT and on blood pressure/electrolytes arise through which relationship?", ["Two distinct mechanisms: local antispasmodic/antibacterial GIT action versus a separate systemic electrolyte effect", "A single mechanism that explains both effects equally", "No relationship; the electrolyte effect is unrelated to licorice", "Both effects arise solely from the flavonoid glycoside content"]], ["Comparing fenugreek's and ginseng's antidiabetic mechanisms, which best describes ginseng's proposed action?", ["Enhancing insulin production only", "Reducing intestinal glucose absorption only", "Both reducing absorption and enhancing insulin, exactly like fenugreek", "Blocking glucagon secretion only"]], ["Why is ginseng specifically avoided during pregnancy, per the lecture's cautions?", ["It is explicitly listed as contraindicated in pregnancy along with breastfeeding and bleeding/autoimmune/heart conditions", "It has no documented cautions in pregnancy", "It is recommended for morning sickness in pregnancy", "It is only contraindicated after the first trimester"]], ["Fenugreek is said to increase breast milk, while ginseng is contraindicated in breastfeeding. This contrast shows:", ["Different saponin-containing plants can have opposite effects on lactation", "All saponin-containing plants have identical lactation effects", "Only synthetic hormones affect lactation, not plant saponins", "The lecture made an error, since all Leguminoseae plants act the same way"]], ["Glycyrrhizin's hydrolysis into glycyrrhetinic acid and glucuronic acid follows which general pattern?", ["The saponin pattern of splitting into a sugar-related portion and a nonpolar aglycon", "A pattern unique to alkaloids, unrelated to saponins", "The pattern of simple protein hydrolysis", "No recognizable glycoside hydrolysis pattern"]], ["Which enzyme-substrate relationship is responsible for glycyrrhizin losing its sweetness over time?", ["Glucuronidase hydrolyzing glycyrrhizin into glycyrrhetinic acid plus glucuronic acid", "Amylase converting glycyrrhizin into starch", "Lipase breaking down glycyrrhizin's fatty component", "Protease degrading glycyrrhizin's peptide bonds"]], ["Diosgenin is described in the lecture as both a 'sapogenin' and a listed 'drug.' Why?", ["As a sapogenin it is the plant aglycon; as a drug it is listed among substances containing steroidal sapogenins for its precursor role", "Because diosgenin is actually two unrelated chemical compounds with the same name", "Because 'drug' and 'sapogenin' mean exactly the same thing in this context", "Because diosgenin only exists in synthetic, not plant, form"]], ["How does the lecture resolve the apparent contradiction between saponins being nutritious food constituents and being described as toxic?", ["Dietary (oral) saponins are safe due to poor GIT absorption; toxicity applies mainly to parenteral exposure", "There is no real contradiction because food saponins are chemically different molecules", "Cooking always removes 100% of a food's saponin content", "Toxicity only applies to saponins from animal sources"]], ["Licorice and fenugreek share the same plant family (Leguminoseae) but differ in which respect?", ["Their principal sapogenin/glycoside: glycyrrhizin (triterpenoid) vs diosgenin (steroidal)", "Both actually belong to different families, contrary to the lecture", "Neither plant produces any saponins at all", "They share an identical principal glycoside"]], ["Why does 'increasing foam' appear as a benefit in industrial, beverage, and confectionery contexts alike?", ["The same surfactant/foaming property of saponins is exploited across all these settings", "Each context relies on a completely unrelated chemical property", "Foam only matters in the cleaning industry, not elsewhere in the lecture", "Foaming is a side effect unrelated to any saponin property"]], ["A student claims steroidal saponins are 'C25' because the attached sugar chain has 25 carbons. What is the correct explanation?", ["The C25 count refers to the sapogenin (aglycon) skeleton, not the sugar chain", "The student is correct as stated", "C25 refers to the number of hydroxyl groups on the sugar", "C25 refers to the total molecular weight in daltons"]], ["Which statement best compares the direct therapeutic role of glycyrrhizin with the general statement that sapogenins are non-therapeutic?", ["Glycyrrhizin itself has direct pharmacological uses, unlike sapogenins described only as synthetic precursors in general", "Glycyrrhizin is also purely non-therapeutic, consistent with all sapogenins", "The general statement about sapogenins does not apply to any triterpenoid saponin", "Glycyrrhizin is a steroidal, not triterpenoid, saponin"]], ["How are licorice's antibacterial action (against H. pylori) and its antispasmodic action best described?", ["Two separate GIT benefits acting through different mechanisms (microbiological vs motility-related)", "The exact same mechanism described twice", "Unrelated to the GIT and instead cardiovascular effects", "Effects that only occur with injected, not oral, licorice"]], ["Comparing cautions: what distinguishes ginseng's duration-of-use caution from licorice's main caution?", ["Ginseng should be limited to about 6 months of use; licorice's main concern is blood pressure/potassium effects, not duration", "Both drugs share an identical 6-month duration limit", "Licorice has a strict duration limit while ginseng has none", "Neither drug has any stated caution in the lecture"]], ["Why is glycyrrhizin classified as a triterpenoid rather than a steroidal saponin?", ["Its aglycon, glycyrrhetinic acid, fits the acidic, oxygen-rich C30 triterpene sapogenin pattern", "It contains a spiroketal side chain typical of steroidal saponins", "It has a C25 neutral aglycon skeleton", "It lacks any sapogenin (aglycon) portion at all"]], ["What general principle links diosgenin's role in cortisone synthesis with glycyrrhizin's role as a flavoring/expectorant agent?", ["Both are saponin-derived constituents that a plant channels toward different useful ends, one as a synthetic precursor and one as a directly active agent", "Both are used purely as food preservatives", "Both are completely pharmacologically inert", "Both are exclusively used in veterinary medicine"]], ["A pharmacist wants a natural sweetener with additional expectorant benefit for a cough syrup. Which saponin drug best fits, and why?", ["Licorice, because glycyrrhizin is both very sweet and has expectorant action", "Ginseng, because it is sweet and antidiabetic", "Fenugreek, because diosgenin is intensely sweet", "Sarsaparilla, because it is a steroidal saponin"]], ["Both saponin classes originate from mevalonic acid, yet diosgenin and glycyrrhizin have very different pharmaceutical roles. What does this best illustrate?", ["A shared biosynthetic origin does not determine the final pharmacological application of the resulting sapogenin", "A shared biosynthetic origin guarantees identical pharmacological effects", "Mevalonic acid is only relevant to steroidal, not triterpenoid, saponins", "Diosgenin and glycyrrhizin are actually chemically identical molecules"]]];
+const quizL3 = [["A saponin foams in water, precipitates RBC cholesterol in vitro, but shows zero oral toxicity despite a lethal IV LD50. What is the single best explanation covering ALL of these observations?", ["High molecular weight/polarity blocks GIT absorption, so the (unchanged) hemolytic potential never reaches RBCs orally, while IV bypasses this barrier entirely", "The compound loses its hemolytic activity completely once swallowed", "Stomach acid converts the saponin into a completely different, non-hemolytic molecule", "Oral saponins bind exclusively to dietary fat and are excreted unchanged"]], ["Diosgenin, sarsapogenin, hecogenin, getogenin, and smilagenin are grouped as cortisone precursors mainly because they:", ["Are structurally related steroidal (C25, spiroketal) sapogenins convertible toward corticosteroid structures, replacing the allergy-prone cattle bile acid route", "Are all triterpenoid C30 acids identical to glycyrrhetinic acid", "Are directly active corticosteroids requiring no further synthesis", "Were isolated from the same single plant species"]], ["Ginsenoside (Dammarane) and the amyrins (Oleanane) are both C30 triterpenoids. What correctly distinguishes tetracyclic from pentacyclic in this context?", ["The same 30-carbon framework is arranged into four fused rings in Dammarane versus five fused rings in Oleanane", "Tetracyclic means four times the carbon count of pentacyclic", "Pentacyclic triterpenoids contain nitrogen while tetracyclic ones do not", "Tetracyclic and pentacyclic refer to the number of attached sugar units, not rings"]], ["Rings E and F of a steroidal sapogenin form a 'ketal' rather than a simple open-chain ketal because:", ["A single carbon shared by both rings bonds to two oxygens that project in non-coplanar directions (a spiro arrangement)", "The rings contain no oxygen atoms at all", "They are joined by a nitrogen bridge typical of alkaloids", "The rings are aromatic, unlike any ketal functional group"]], ["Both saponin classes share a position-3 glycosidic linkage and a mevalonic acid origin despite differing in carbon count and charge. The best biochemical explanation is:", ["Both derive from the same isoprenoid precursor, later cyclized/oxidized differently, so the shared early sugar-attachment chemistry persists even as the final aglycons diverge", "The position-3 linkage is coincidental and biosynthetically unrelated to mevalonic acid", "Only steroidal saponins actually derive from mevalonic acid; triterpenoids do not", "Sugar attachment position is determined solely by the sugar, not the aglycon pathway"]], ["Glycyrrhizin's glycon consists of glucuronic acid rather than the arabinose/xylose/glucose typically cited for saponins. What does this best demonstrate?", ["The glycon component of saponins is chemically variable and can itself be responsible for distinctive properties, like glycyrrhizin's intense sweetness", "All saponins must contain only neutral monosaccharides as their glycon", "Glucuronic acid cannot be considered a true sugar", "Licorice is therefore not classified as a true saponin-containing drug"]], ["A hypertensive, hypokalemic patient consumes licorice candy daily. What is the most complete explanation and correct clinical response?", ["Chronic licorice intake can raise blood pressure and lower potassium, worsening this exact picture, so intake should be reduced or stopped, especially given existing hypertension risk factors", "Licorice has no cardiovascular relevance and another cause must be sought", "Licorice will correct the low potassium, so intake should be increased", "Only injected licorice extracts, not oral candy, carry this risk"]], ["Diosgenin is both a 'non-therapeutic' synthetic precursor and a constituent credited with direct antidiabetic/anti-inflammatory activity in fenugreek. How is this best reconciled?", ["The non-therapeutic label applies to the isolated pure sapogenin needing further chemical synthesis, while the fenugreek activities reflect the whole crude-drug extract's intrinsic effect, two different levels of use", "This is an unresolved contradiction in the lecture with no valid explanation", "Fenugreek's diosgenin content is actually zero, so no contradiction exists", "Diosgenin is therapeutic while all other sapogenins are non-therapeutic"]], ["Comparing fenugreek's and ginseng's antidiabetic mechanisms, which statement is most accurate?", ["Ginseng's mechanism is framed purely as enhanced insulin production, while fenugreek combines reduced sugar absorption with insulin stimulation, a broader mechanism", "Both mechanisms are described identically as reducing sugar absorption only", "Ginseng's mechanism is broader, combining absorption and secretion effects, unlike fenugreek", "Neither drug has any proposed antidiabetic mechanism in the lecture"]], ["Triterpenoid saponins are 'more distributed in nature,' yet diosgenin (steroidal) is the industry's principal sapogenin. The best reconciliation is:", ["Natural abundance and industrial dominance are independent; diosgenin's spiroketal side chain offers an efficient synthetic route despite triterpenoids being more common overall", "This is a factual contradiction with no valid resolution", "Triterpenoids are actually less common than steroidal saponins, contrary to the stated text", "Industrial use always tracks natural abundance exactly"]], ["Ginseng's cautioned interactions with diabetes, blood, and depression medications are best explained by which combination of mechanisms?", ["Insulin-enhancing (diabetes drugs), an effect relevant to bleeding/coagulation (blood medications), and stimulant/hormonal CNS action (depression medications)", "A single antihistamine mechanism explaining all three interactions", "Ginseng has no plausible mechanism for any of these interactions", "All three interactions stem solely from ginseng's expectorant action"]], ["What single physicochemical property unifies saponins' industrial roles as emulsifiers/detergents with their pharmacological role as absorption enhancers?", ["Their amphipathic (surfactant) structure, a polar sugar region plus nonpolar sapogenin core, that lowers interfacial tension in each context", "Their uniformly acidic pH across all saponins", "Their high nitrogen content acting as a base in every context", "Their resistance to any form of hydrolysis"]], ["Tracing the full chain: fenugreek supplies diosgenin, diosgenin is listed for cortisone production, and sapogenins are valued as synthesis starting material. What historical shift does this chain support?", ["The shift from allergy-prone, supply-limited cattle bile acid sources to more abundant plant-derived steroidal sapogenin routes for cortisone synthesis", "A shift away from all plant-based drug sources toward purely synthetic chemistry", "Evidence that fenugreek itself, without any chemical modification, is cortisone", "A shift making cattle bile acids the preferred modern cortisone source"]], ["Saponins are safe orally yet devastating as fish poisons for cold-blooded animals. Why is this not a contradiction?", ["Aquatic animals absorb saponins directly through gills/mucous membranes, bypassing the protective GIT barrier that limits oral absorption in land animals eating the same plant", "Fish have a completely different, more sensitive form of hemoglobin", "Saponins become more concentrated automatically once dissolved in water", "Cold-blooded animals lack any RBC membrane cholesterol, making them uniquely vulnerable for unrelated reasons"]], ["Beyond carbon count and acid/base testing, what structural evidence would most reliably confirm a sapogenin as the steroidal (not triterpenoid) type?", ["Confirmation of a true spiroketal side chain formed by spiro-fused rings E and F", "A simple positive Molisch test for carbohydrates", "A positive foam test in aqueous solution", "Solubility in ethanol alone"]], ["Is describing licorice's expectorant action redundant with the general pharmacological-applications section on saponin expectorants?", ["No; the general section establishes the class-wide mechanism (using Ipecac and liquorice as examples), while the licorice section elaborates that mechanism for one specific, clinically detailed drug", "Yes, it is a pure and pointless repetition with no added value", "No, because the two sections describe entirely unrelated mechanisms", "Yes, because licorice and liquorice are unrelated plants"]], ["Fenugreek and licorice share the plant family Leguminoseae yet yield very different principal glycosides. What does this best teach?", ["Plant family alone does not reliably predict saponin chemotype; structural/biosynthetic criteria are needed instead", "All Leguminoseae plants must produce the identical principal glycoside", "Plant family is the single most reliable predictor of saponin chemotype", "Only non-Leguminoseae plants can produce triterpenoid saponins"]], ["Using only each drug's OTHER stated properties, what is the most plausible mechanistic link for fenugreek's hair-loss benefit and ginseng's immunity-boosting claim, respectively?", ["Fenugreek: its testosterone/estrogen effect; Ginseng: its antioxidant/anti-stress properties", "Fenugreek: its expectorant action; Ginseng: its insomnia side effect", "Fenugreek: its antibacterial action; Ginseng: its bleeding-condition contraindication", "Neither claim can be linked to any other stated property"]], ["A formulator combines a saponin's foaming action and its drug-absorption-enhancing action in one oral product. What is the real safety implication?", ["Minimal real oral-safety concern, since the same surfactant property drives both benign effects while systemic absorption (and thus hemolysis) is independently blocked by the saponin's size/polarity", "A severe safety concern, since foaming always indicates systemic hemolysis risk in any formulation", "No relationship exists between foaming and absorption-enhancement at all", "The combination is only safe if administered intravenously"]], ["Diosgenin's spiroketal carries a methyl group at position 25. How does this connect to the 'C25' designation of steroidal saponins?", ["Carbon 25 is the terminal carbon at the outer end of the very spiroketal side chain whose presence defines the total C25 skeleton count", "Position 25 refers to the 25th glycosidic bond in the molecule", "C25 refers to 25 separate sugar units attached to the aglycon", "There is no structural relationship between position 25 and the C25 classification"]], ["What is the best unifying explanation for saponins' fish-poison toxicity in aquatic cold-blooded animals and their IV hemolytic toxicity in mammals?", ["Both reflect the same surfactant-driven disruption of cholesterol-containing cell membranes; only the exposure route and tissue differ", "These are two entirely unrelated toxic mechanisms that happen to share a name", "Fish poison activity depends on a completely different, non-hemolytic toxin", "Mammalian hemolysis requires enzymatic activation absent in fish"]], ["Is the 'Chemical Classification' section's C25/C30 split a different system from the earlier steroidal/tri-terpenoid split given at the very start of the lecture?", ["No; it is the same dichotomy, first introduced briefly and later elaborated with defining carbon counts, ring structures, and sub-family names", "Yes, they are two entirely independent classification systems covering different saponins", "Yes, the early split covers sugars while the later split covers only aglycons", "No, but the later section actually contradicts and replaces the earlier one"]], ["Would a neutral C30 sapogenin fit cleanly into the lecture's classification scheme? Why or why not?", ["No; the scheme pairs C25 with neutral/steroidal and C30 with acidic/triterpenoid, so a neutral C30 example would be an exception requiring re-examination of its oxygen-containing groups", "Yes, because carbon count alone always determines charge type without exception", "Yes, because all C30 sapogenins are neutral by definition", "No, because C30 sapogenins cannot structurally exist according to the lecture"]], ["What epistemic distinction does the lecture draw between ginseng's internally-used pharmacological claims and its use in cosmetic preparations?", ["Internal uses (antidiabetic, anti-stress, immunity booster, etc.) are presented with more confidence, while cosmetic use is explicitly noted as not clinically proven effective", "Both categories of use are given identical, strong clinical evidence", "Cosmetic use is described as more rigorously proven than internal use", "The lecture provides no distinction between these two categories at all"]], ["If a licorice cough syrup were stored under conditions favoring glucuronidase-mediated glycyrrhizin breakdown, what would most likely happen over time?", ["Progressive loss of sweetness as glycyrrhizin converts to glycyrrhetinic acid and glucuronic acid, with the pharmacological profile shifting toward the aglycon's activity", "The syrup would become sweeter as more glycyrrhizin forms spontaneously", "No change would occur, since glucuronidase cannot act on glycyrrhizin in solution", "The syrup would turn into a triterpenoid steroidal drug"]], ["Why might the lecture single out diosgenin, rather than sarsapogenin, hecogenin, getogenin, or smilagenin, as 'the principle sapogenin used by industry'?", ["All five are viable cortisone precursors, but diosgenin has become the practically dominant industrial choice due to its abundance (e.g., from fenugreek) and synthetic efficiency", "Diosgenin is the only one of the five that is actually a triterpenoid, not steroidal", "The other four sapogenins are not derived from plants at all", "Diosgenin is the only one of the five with no industrial use"]], ["Is the claim 'a shared mevalonic acid origin means steroidal and triterpenoid saponins must have identical pharmacological effects' correct?", ["No; shared biosynthetic origin explains only the common metabolic starting point, not the very different final activities seen for diosgenin, glycyrrhizin, and ginsenoside", "Yes, shared origin always guarantees identical downstream pharmacology", "No, because triterpenoid saponins do not actually originate from mevalonic acid", "Yes, but only for steroidal saponins, not triterpenoid ones"]], ["How does the position-3 glycosidic linkage relate to the general hydrolysis reaction described for saponins overall?", ["Position 3 is precisely the bond cleaved during hydrolysis, releasing the free sugar and the nonpolar sapogenin", "Position 3 refers to the third sugar unit in a trisaccharide chain, unrelated to hydrolysis", "Hydrolysis of saponins never actually involves the position-3 bond", "Position 3 is only relevant to triterpenoid, not steroidal, saponins"]], ["Are the cautions against ginseng in autoimmune disease and against licorice in kidney disease based on the same pharmacological rationale?", ["No; ginseng's caution relates to immune-modulating activity, while licorice's relates to electrolyte/blood-pressure effects, two distinct rationales", "Yes, both cautions stem from identical hemolytic mechanisms", "Yes, both drugs are cautioned solely due to sedative CNS effects", "No, because neither drug actually carries any disease-specific caution"]], ["If glycyrrhetinic acid retains licorice's antispasmodic and antibacterial actions but not its sweetness, what does this suggest?", ["Sweetness depends on the intact glycoside (glucuronic acid units), while the pharmacological actions can be attributed to the aglycon or the whole molecule independent of sweetness", "Sweetness and pharmacological activity must always reside in the exact same molecular fragment", "Glycyrrhetinic acid cannot possibly retain any activity once the sugar is removed", "The aglycon is pharmacologically inert according to the lecture"]], ["Fenugreek's traditional medicinal use is said not to contradict diosgenin's status as a non-therapeutic synthetic precursor. What resolves this apparent tension?", ["The crude seed extract's intrinsic bioactivity (traditional use) is distinct from the isolated pure sapogenin's need for further synthesis (industrial use)", "Fenugreek actually contains no diosgenin, resolving the tension trivially", "Diosgenin is fully therapeutic on its own, so no tension ever existed", "Traditional medicine and industrial chemistry never reference the same constituent"]], ["What is the best description of the shared surfactant chemistry underlying saponins' roles as foam-formers, fat/oil emulsifiers, and absorption enhancers?", ["An amphipathic structure (polar sugar region plus nonpolar sapogenin core) that orients at interfaces and lowers interfacial tension in each setting", "A shared strong acidic character responsible for all three roles", "A shared property of high volatility enabling rapid interface formation", "A shared nitrogen-containing functional group absent from most saponins"]], ["Why would 'emulsification and toxicity' be only a partially correct answer for naming the two main properties of saponins as defined in the lecture?", ["The lecture's precise terms are 'foaming property' and 'hemolysis'; emulsification/toxicity are related but broader synonyms, not the exact stated terms", "Emulsification and toxicity are completely unrelated to anything discussed in the lecture", "The lecture defines exactly four main properties, not two", "'Toxicity' and 'hemolysis' are mutually exclusive concepts in the lecture"]], ["How can 'sapogenins are not used as therapeutic agents' and 'steroidal saponins are of great pharmaceutical importance' both be true simultaneously?", ["Their pharmaceutical importance lies in their role as precursor material for hormone synthesis, an industrial rather than direct clinical role, so both statements address different aspects of value", "These two statements are logically contradictory and cannot both be true", "Pharmaceutical importance always requires direct therapeutic use, making one statement false", "Steroidal saponins are the only sapogenins that are actually therapeutic, resolving all tension"]], ["Would a newly discovered hexacyclic (six-ring) triterpenoid sapogenin fit either subfamily named in the lecture?", ["No; only tetracyclic (Dammarane) and pentacyclic (Oleanane) are described, so a hexacyclic example lies outside these two named, representative families", "Yes, it would automatically be classified as Dammarane", "Yes, it would automatically be classified as Oleanane", "No, because hexacyclic sapogenins cannot exist in nature according to the lecture"]], ["What is the most plausible mechanistic connection between saponins' general hemolytic (membrane-disrupting) action and glycyrrhizin's antibacterial action against H. pylori?", ["The same surfactant-driven membrane-interacting mechanism that disrupts RBC membranes may, in a modified or selective way, also compromise bacterial membrane/wall integrity", "There is no plausible mechanistic connection between these two effects", "Antibacterial activity requires an entirely different, non-membrane-related mechanism unrelated to any saponin property", "Hemolysis and antibacterial activity are mutually exclusive properties that cannot coexist in one glycoside"]], ["Why does 'combined oral contraceptives' appear both under general saponin applications and under fenugreek's medicinal uses?", ["The general section establishes the class-level principle, and the fenugreek section grounds that same principle in the specific example of diosgenin, moving from general to specific", "This is an unintentional repetition with no pedagogical purpose", "Fenugreek and general saponins refer to two entirely different classes of oral contraceptive", "The two mentions describe unrelated, coincidentally identical drug names"]], ["Evaluating a product combining fenugreek and ginseng extracts for male reproductive health, what is the most balanced assessment?", ["Mechanistically plausible and complementary (fenugreek's hormonal effect plus ginseng's sexual-stimulant effect), but ginseng's interactions and contraindications add real risk to consider", "Completely safe with no need for any caution given the natural origin of both ingredients", "Pharmacologically redundant, since both drugs act through the exact same mechanism", "Contraindicated in all circumstances due to guaranteed additive toxicity"]], ["Why does the lecture keep steroidal and triterpenoid saponins as two distinct chemical classes despite both being pharmaceutically important?", ["They differ fundamentally in skeleton size, charge, key structural feature, and downstream chemical application, justifying separate classification despite shared pharmaceutical relevance", "Because only one of the two classes is genuinely pharmaceutically important", "Because they are chemically identical and the distinction is purely historical/arbitrary", "Because triterpenoid saponins do not actually contain any sapogenin"]], ["As an integrative capstone: which statement BEST ties together hydrolysis, the foaming/hemolytic duality, the C25/C30 split, and the three named drugs (licorice, fenugreek, ginseng)?", ["Saponins hydrolyze into sugar and sapogenin; their shared surfactant chemistry explains both foaming and hemolysis (safe orally, dangerous parenterally); sapogenins split by carbon count into neutral C25 steroidal or acidic C30 triterpenoid types; and licorice, fenugreek, and ginseng each exemplify this framework through distinct industrial, synthetic, and direct pharmacological roles", "Each of the three named drugs represents a completely separate glycoside class unrelated to the general saponin framework", "The C25/C30 split is unrelated to hydrolysis or to any of the three named drugs", "Foaming and hemolysis are unrelated properties found in different, non-overlapping sets of saponins"]]];
+
+function shuffleArr(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+let quizLevel = 1;
+const quizSets = {1: quizL1, 2: quizL2, 3: quizL3};
+let score=0, answered=0;
+const quizList = document.getElementById('quiz-list');
+function buildQuiz(){
+  const quizRaw = quizSets[quizLevel];
+  quizList.innerHTML='';
+  score=0; answered=0;
+  updateScore();
+  quizRaw.forEach((q,i)=>{
+    const correctText = q[1][0];
+    const opts = shuffleArr(q[1]);
+    const card = document.createElement('div');
+    card.className='q-card';
+    card.innerHTML = `<div class="q-num">QUESTION ${i+1} OF ${quizRaw.length}</div><div class="q-text">${q[0]}</div>`;
+    opts.forEach(optText=>{
+      const btn = document.createElement('button');
+      btn.className='opt';
+      btn.textContent = optText;
+      btn.addEventListener('click', ()=>{
+        if(btn.disabled) return;
+        const allOpts = card.querySelectorAll('.opt');
+        allOpts.forEach(o=>o.disabled=true);
+        if(optText === correctText){
+          btn.classList.add('correct');
+          score++;
+        } else {
+          btn.classList.add('wrong');
+          allOpts.forEach(o=>{ if(o.textContent===correctText) o.classList.add('correct'); });
+        }
+        answered++;
+        updateScore();
+      });
+      card.appendChild(btn);
+    });
+    quizList.appendChild(card);
+  });
+}
+function updateScore(){
+  document.getElementById('quiz-score').textContent = `Score: ${score} / ${answered}`;
+}
+document.getElementById('quiz-reset').addEventListener('click', buildQuiz);
+document.querySelectorAll('#quiz-level-row .level-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('#quiz-level-row .level-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    quizLevel = parseInt(btn.dataset.level, 10);
+    buildQuiz();
+  });
+});
+buildQuiz();
+</script>
+</body>
+</html>
